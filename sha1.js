@@ -1,4 +1,4 @@
-sha1 = function(charCodeAt,push,length,bigNum,sixteen,twentyFour,oneTwentyEight){
+sha1 = function(charCodeAt,push,length,bigNum,sixteen){
 	function rotate_left(n, s) {
 		return  (n << s) | (n >>> (32 - s));
 	}
@@ -30,7 +30,7 @@ sha1 = function(charCodeAt,push,length,bigNum,sixteen,twentyFour,oneTwentyEight)
 		var str_len = A = str[length];
 
 		for (; i<=str_len;){
-			word_array[i>>2] |= (str[charCodeAt](i)||oneTwentyEight)<<(8*(3-i++%4));
+			word_array[i>>2] |= (str[charCodeAt](i)||128)<<(8*(3-i++%4));
 		}
 
 		while ((word_array[length] % sixteen) != 14) {
@@ -78,4 +78,4 @@ sha1 = function(charCodeAt,push,length,bigNum,sixteen,twentyFour,oneTwentyEight)
 		return cvt_hex(H0) + cvt_hex(H1) + cvt_hex(H2) + cvt_hex(H3) + cvt_hex(H4);
 	}
 	return sha1
-}('charCodeAt','push','length',0x0ffffffff,16,24,128)
+}('charCodeAt','push','length',0x0ffffffff,16)
