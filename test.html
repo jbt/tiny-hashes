@@ -1,0 +1,46 @@
+<html>
+<head>
+	<title>Hash function test</title>
+	<script src="sha1.js"></script>
+	<script src="sha256.js"></script>
+	<script src="md5-min.js"></script>
+	<style type="text/css">
+		.fail{color:red;}
+		.win{color:green;}
+	</style>
+</head>
+<body>
+<script>
+var tests = [
+
+'',														'da39a3ee5e6b4b0d3255bfef95601890afd80709','e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855','d41d8cd98f00b204e9800998ecf8427e',
+'a',													'86f7e437faa5a7fce15d1ddcb9eaeaea377667b8','ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb','0cc175b9c0f1b6a831c399e269772661',
+'aa',													'e0c9035898dd52fc65c41454cec9c4d2611bfb37','961b6dd3ede3cb8ecbaacbd68de040cd78eb2ed5889130cceb4c49268ea4d506','4124bc0a9335c27f086f24ba207a4912',
+'aaaaaaaa',												'b480c074d6b75947c02681f31c90c668c46bf6b8','1f3ce40415a2081fa3eee75fc39fff8e56c22270d1a978a7249b592dcebd20b4','3dbe00a167653a1aaee01d93e77e730e',
+'blah',													'5bf1fd927dfb8679496a2e6cf00cbe50c1c87145','8b7df143d91c716ecfa5fc1730022f6b421b05cedee8fd52b1fc65a96030ad52','6f1ed002ab5595859014ebf0951522d9',
+'Q£$%£!"@%$@%^£"!214',									'fb0f1c1878d6a9093fd52b7d2f1d066640993f8f','e7778ed2130babbace07ce85a4d25e6e2303c41e7a1e49027737ebea56a604a6','d2868a1e034599ee2e8a726e2120b761',
+'Þetta er einhver kaldur íslenskum texta',				'7ce263e0d52dcf54a9e4de5979049e760468dafb','c1f44bce9934fe3310a11b82db829d3568c6d6233c1506ac0c2464eb24810db7','578d28a0e76366da490fa4cf4ffc9343',
+'Online översättningstjänster är mycket användbara',	'554865ee369ed27dfc308cbfe9c3703935023868','7ce0f19b2b8000a855e2512b0a435108aab94149852f39fd26705eb55d8fcf72','b7f6ecdec793978c7d87cde83267dde9',
+0];
+function test(str, func, expected){
+	if(!window[func])return true;
+	if(expected !== window[func](str)){
+		document.write('<p class="fail">' + func + ' test failed for string "' + str + '". Expected "' + expected + '", got "' + window[func](str) + '"</p>');	
+		return false;
+	}
+	return true;
+}
+
+function runTests(){
+	var allSucceeded = true;
+	for(var i=0; i+3 < tests.length; i+=4){
+		allSucceeded &= test(tests[i], 'sha1', tests[i+1]);
+		allSucceeded &= test(tests[i], 'sha256', tests[i+2]);
+		allSucceeded &= test(tests[i], 'md5', tests[i+3]);
+	}
+	if(allSucceeded)document.write('<p class="win">Yay, they all worked!</p>');
+}
+runTests();
+</script>
+</body>
+</html>

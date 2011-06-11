@@ -10,21 +10,21 @@ md5 = function(sixteen,ffff,length){
 	6, 10, 15, 21
 	
 	];
-		for(;i<64;){
+	for(;i<64;){
 		k[i] = ~~(Math.abs(Math.sin(++i)) * 4294967296);
 	}
 
 	function rhex(num,str,j){
 		str = "";
-		for(j=0; j <= 3;)	str += ((num >> (j * 8 + 4)) & 0x0F).toString(sixteen) + ((num >> (j++ * 8)) & 0x0F).toString(sixteen);
+		for(j=0; j <= 3;)	str += (256|(num >> (j++ * 8)) & 0x1FF).toString(sixteen).slice(1);
 		return str;
 	}
 
 	function str2blks_MD5(str){
-		var	blks = [],i=0;
-		for(; str[i];)	blks[i >> 2] |= str.charCodeAt(i) << ((i++ % 4) * 8);
+		var	blks = [],i=0,j=str[length];
+		for(;i<j;)	blks[i >> 2] |= str.charCodeAt(i) << ((i++ % 4) * 8);
 		blks[i >> 2] |= 0x80 << ((i % 4) * 8);
-		blks[((str[length] + 8) >> 6)*sixteen+14] = str[length] * 8;
+		blks[((j+ 8) >> 6)*sixteen+14] = j * 8;
 		return blks;
 	}
 
