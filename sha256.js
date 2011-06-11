@@ -1,36 +1,35 @@
 sha256 = function(sixteen, ffff,length,fifteen){
 
-function SHA256(s){
- 
-	var chrsz   = 8;
+	 
+var chrsz   = 8;
+
+// Eratosthenes seive to find primes up to 311 for magic constants. This is why SHA256 is better than SHA1
+var ints=[],i=1,j,primes=[],idx=64,K=[];
+while(++i<18)if(!ints[i])for(j=i*i;j<312;j+=i)ints[j]=1;
+for(i=1;i<313;)if(!ints[++i])primes.push(i);
+function x(num,root){
+	var x = Math.pow(num,1/root);
+	return 0|((x-~~x)*4294967296)
+}
+for(; idx--;)K[idx]=x(primes[idx],3);
 	
-	// Eratosthenes seive to find primes up to 311 for magic constants. This is why SHA256 is better than SHA1
-	var ints=[],i=1,j,primes=[];
-	while(++i<18)if(!ints[i])for(j=i*i;j<312;j+=i)ints[j]=1;
-	for(i=1;i<313;)if(!ints[++i])primes.push(i);
- 
-	var K = [];
-	function x(num,root){
-		var x = Math.pow(num,1/root);
-		return 0|((x-~~x)*4294967296)
-	}
-	for(var idx = 64; idx--;)K[idx]=x(primes[idx],3);
-		
- 
-	function safe_add (x, y) {
-		var lsw = (x & ffff) + (y & ffff);
-		var msw = (x >> sixteen) + (y >> sixteen) + (lsw >> sixteen);
-		return (msw << sixteen) | (lsw & ffff);
-	}
- 
-	function S (X, n) { return ( X >>> n ) | (X << (32 - n)); }
-	function R (X, n) { return ( X >>> n ); }
-	function Ch(x, y, z) { return ((x & y) ^ ((~x) & z)); }
-	function Maj(x, y, z) { return ((x & y) ^ (x & z) ^ (y & z)); }
-	function Sigma0256(x) { return (S(x, 2) ^ S(x, 13) ^ S(x, 22)); }
-	function Sigma1256(x) { return (S(x, 6) ^ S(x, 11) ^ S(x, 25)); }
-	function Gamma0256(x) { return (S(x, 7) ^ S(x, 18) ^ R(x, 3)); }
-	function Gamma1256(x) { return (S(x, 17) ^ S(x, 19) ^ R(x, 10)); }
+
+function safe_add (x, y) {
+	var lsw = (x & ffff) + (y & ffff);
+	var msw = (x >> sixteen) + (y >> sixteen) + (lsw >> sixteen);
+	return (msw << sixteen) | (lsw & ffff);
+}
+
+function S (X, n) { return ( X >>> n ) | (X << (32 - n)); }
+function R (X, n) { return ( X >>> n ); }
+function Ch(x, y, z) { return ((x & y) ^ ((~x) & z)); }
+function Maj(x, y, z) { return ((x & y) ^ (x & z) ^ (y & z)); }
+function Sigma0256(x) { return (S(x, 2) ^ S(x, 13) ^ S(x, 22)); }
+function Sigma1256(x) { return (S(x, 6) ^ S(x, 11) ^ S(x, 25)); }
+function Gamma0256(x) { return (S(x, 7) ^ S(x, 18) ^ R(x, 3)); }
+function Gamma1256(x) { return (S(x, 17) ^ S(x, 19) ^ R(x, 10)); }
+	
+function SHA256(s){
  
 	function core_sha256 (m, l) {
 		var HASH = [];
@@ -90,18 +89,15 @@ function SHA256(s){
 		return bin;
 	}
  
-	function Utf8Encode(string) {return unescape(encodeURIComponent(string))}
- 
 	function binb2hex (binarray,str,i) {
 		str = "";
 		for(i = 0; i < 32;) {
-			str += (((binarray[i>>2] >> ((3 - i%4)*8+4)) & fifteen)).toString(sixteen)+
-			((binarray[i>>2] >> ((3 - i++%4)*8  )) & fifteen).toString(sixteen);
+			str += ((256|(binarray[i>>2] >> ((3 - i++%4)*8)) & 511)).toString(sixteen).slice(1);
 		}
 		return str;
 	}
  
-	s = Utf8Encode(s);
+	s = unescape(encodeURIComponent(s));
 	return binb2hex(core_sha256(str2binb(s), s[length] * chrsz));
  
 }
