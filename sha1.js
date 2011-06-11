@@ -1,4 +1,4 @@
-sha1 = function(charCodeAt,push,length,bigNum,sixteen){
+sha1 = function(length,bigNum,sixteen){
 	function rotate_left(n, s) {
 		return  (n << s) | (n >>> (32 - s));
 	}
@@ -27,17 +27,17 @@ sha1 = function(charCodeAt,push,length,bigNum,sixteen){
 		var word_array = [];
 
 		str = unescape(encodeURIComponent(str))
-		var str_len = A = str[length];
+		var str_len = str[length];
 
 		for (; i<=str_len;){
-			word_array[i>>2] |= (str[charCodeAt](i)||128)<<(8*(3-i++%4));
+			word_array[i>>2] |= (str.charCodeAt(i)||128)<<(8*(3-i++%4));
 		}
 
 		while ((word_array[length] % sixteen) != 14) {
-			word_array[push](0);
+			word_array.push(0);
 		}
 
-		word_array[push](str_len >>> 29, (str_len << 3) & bigNum);
+		word_array.push(str_len >>> 29, (str_len << 3) & bigNum);
 
 		for (; blockstart < word_array[length]; blockstart += sixteen) {
 			for (i = -1; ++i < 80;) {
@@ -54,10 +54,9 @@ sha1 = function(charCodeAt,push,length,bigNum,sixteen){
 			for (i = 0; i < 80; ) {
 				G = rotate_left(A,5);
 				H = E + W[i] + 1518500249;
-				F = G + (B ^ C ^ D) + H + 341275144;
 				temp = [
 					G + ((B & C) | (~B & D)) + H,
-					F,
+					F = G + (B ^ C ^ D) + H + 341275144,
 					G + ((B & C) | (B & D) | (C & D)) + H + 882459459,
 					F + 1535694389
 				][0|(i++/20)];
@@ -78,4 +77,4 @@ sha1 = function(charCodeAt,push,length,bigNum,sixteen){
 		return cvt_hex(H0) + cvt_hex(H1) + cvt_hex(H2) + cvt_hex(H3) + cvt_hex(H4);
 	}
 	return sha1
-}('charCodeAt','push','length',0x0ffffffff,16)
+}('length',0x0ffffffff,16)
