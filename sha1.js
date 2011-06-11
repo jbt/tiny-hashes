@@ -29,14 +29,9 @@ sha1 = function(charCodeAt,push,length,bigNum,sixteen,twentyFour,oneTwentyEight)
 		str = unescape(encodeURIComponent(str))
 		var str_len = A = str[length];
 
-		for (; i < str_len - 3;) {
-			word_array[push](str[charCodeAt](i++) << twentyFour | str[charCodeAt](i++) << sixteen | str[charCodeAt](i++) << 8 | str[charCodeAt](i++));
+		for (; i<=str_len;){
+			word_array[i>>2] |= (str[charCodeAt](i)||oneTwentyEight)<<(8*(3-i++%4));
 		}
-		temp = oneTwentyEight<<twentyFour;
-		for(;A-->i;){ // look, it's a little arrow! ;)
-			temp = (temp >>> 8) | str[charCodeAt](A)<<twentyFour;
-		}
-		word_array[push](temp);
 
 		while ((word_array[length] % sixteen) != 14) {
 			word_array[push](0);
