@@ -1,4 +1,4 @@
-sha1 = function(length,bigNum,sixteen){
+sha1 = function(bigNum,sixteen){
 	function rotate_left(n, s) {
 		return  (n << s) | (n >>> (32 - s));
 	}
@@ -25,24 +25,22 @@ sha1 = function(length,bigNum,sixteen){
 		var A, B, C, D, E, F, G, H;
 		var temp;
 		var word_array = [];
+		var temp2;
 
 		str = unescape(encodeURIComponent(str))
-		var str_len = str[length];
+		var str_len = str.length;
 
 		for (; i<=str_len;){
 			word_array[i>>2] |= (str.charCodeAt(i)||128)<<(8*(3-i++%4));
 		}
-
-		while ((word_array[length] % sixteen) != 14) {
-			word_array.push(0);
-		}
-
-		word_array.push(str_len >>> 29, (str_len << 3) & bigNum);
-
-		for (; blockstart < word_array[length]; blockstart += sixteen) {
+		temp2 = str_len>>2;
+		while(temp2++%16 != 14){}
+		word_array[temp2-1] = str_len>>>29;
+		word_array[temp2++] = (str_len << 3) & bigNum
+		for (; blockstart < temp2; blockstart += sixteen) {
 			for (i = -1; ++i < 80;) {
 				temp = W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - sixteen]
-				W[i] = (i<sixteen) ? word_array[blockstart + i] : (rotate_left(temp, 1));
+				W[i] = (i<sixteen) ? ~~word_array[blockstart + i] : (rotate_left(temp, 1));
 			}
 
 			A = H0;
@@ -77,4 +75,4 @@ sha1 = function(length,bigNum,sixteen){
 		return cvt_hex(H0) + cvt_hex(H1) + cvt_hex(H2) + cvt_hex(H3) + cvt_hex(H4);
 	}
 	return sha1
-}('length',0x0ffffffff,16)
+}(0x0ffffffff,16)
