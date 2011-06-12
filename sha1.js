@@ -1,4 +1,4 @@
-sha1 = function(bigNum,sixteen){
+sha1 = function(bigNum){
 	function rotate_left(n, s) {
 		return  (n << s) | (n >>> (32 - s));
 	}
@@ -6,7 +6,7 @@ sha1 = function(bigNum,sixteen){
 	function cvt_hex(val,str,i) {
 		str = "";
 		for (i = 8; i--;) {
-			str += ((val >>> (i * 4)) & 15).toString(sixteen);
+			str += ((val >>> (i * 4)) & 15).toString(16);
 		}
 		return str;
 	}
@@ -37,10 +37,10 @@ sha1 = function(bigNum,sixteen){
 		while(temp2++%16 != 14){}
 		word_array[temp2-1] = str_len>>>29;
 		word_array[temp2++] = (str_len << 3) & bigNum
-		for (; blockstart < temp2; blockstart += sixteen) {
+		for (; blockstart < temp2; blockstart += 16) {
 			for (i = -1; ++i < 80;) {
-				temp = W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - sixteen]
-				W[i] = (i<sixteen) ? ~~word_array[blockstart + i] : (rotate_left(temp, 1));
+				temp = W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16]
+				W[i] = (i<16) ? ~~word_array[blockstart + i] : (rotate_left(temp, 1));
 			}
 
 			A = H0;
@@ -75,4 +75,4 @@ sha1 = function(bigNum,sixteen){
 		return cvt_hex(H0) + cvt_hex(H1) + cvt_hex(H2) + cvt_hex(H3) + cvt_hex(H4);
 	}
 	return sha1
-}(0x0ffffffff,16)
+}(0x0ffffffff)

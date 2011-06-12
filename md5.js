@@ -22,8 +22,7 @@ md5 = function(sixteen,ffff,length){
 
 	function str2blks_MD5(str){
 		var	blks = [],i=0,j=str[length];
-		for(;i<j;)	blks[i >> 2] |= str.charCodeAt(i) << ((i++ % 4) * 8);
-		blks[i >> 2] |= 0x80 << ((i % 4) * 8);
+		for(;i<=j;)	blks[i >> 2] |= (str.charCodeAt(i)||128) << ((i++ % 4) * 8);
 		blks[((j+ 8) >> 6)*sixteen+14] = j * 8;
 		return blks;
 	}
