@@ -1,7 +1,5 @@
 sha256 = function(sixteen, ffff,length,fifteen){
 
-	 
-var chrsz   = 8;
 
 // Eratosthenes seive to find primes up to 311 for magic constants. This is why SHA256 is better than SHA1
 var ints=[],i=1,j,primes=[],idx=64,K=[];
@@ -80,11 +78,10 @@ function SHA256(s){
 		return HASH;
 	}
  
-	function str2binb (str,bin,mask,i) {
+	function str2binb (str,bin,i) {
 		bin = [];
-		mask = (1 << chrsz) - 1;
-		for(i = 0; i < str[length] * chrsz; i += chrsz) {
-			bin[i>>5] |= (str.charCodeAt(i / chrsz) & mask) << (24 - i%32);
+		for(i = 0; i < str[length];) {
+			bin[i>>2] |= (str.charCodeAt(i) & 0xff) << 8*(3 - i++%4);
 		}
 		return bin;
 	}
@@ -98,7 +95,7 @@ function SHA256(s){
 	}
  
 	s = unescape(encodeURIComponent(s));
-	return binb2hex(core_sha256(str2binb(s), s[length] * chrsz));
+	return binb2hex(core_sha256(str2binb(s), s[length] * 8));
  
 }
 return SHA256

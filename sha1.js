@@ -33,9 +33,8 @@ sha1 = function(bigNum){
 		for (; i<=str_len;){
 			word_array[i>>2] |= (str.charCodeAt(i)||128)<<(8*(3-i++%4));
 		}
-		temp2 = str_len>>2;
-		while(temp2++%16 != 14){}
-		word_array[temp2-1] = str_len>>>29;
+		temp2 = (str_len>>>6)*16+14;
+		word_array[temp2++] = str_len>>>29;
 		word_array[temp2++] = (str_len << 3) & bigNum
 		for (; blockstart < temp2; blockstart += 16) {
 			for (i = -1; ++i < 80;) {
