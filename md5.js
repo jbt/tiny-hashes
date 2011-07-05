@@ -2,14 +2,6 @@ md5 = function(sixteen,ffff,length){
 
 	var k = [],i=0;
 
-	var r = [
-
-	7, 12, 17, 22,
-	5,  9, 14, 20,
-	4, 11, sixteen, 23,
-	6, 10, 15, 21
-
-	];
 	for(;i<64;){
 		k[i] = ~~(Math.abs(Math.sin(++i)) * 4294967296);
 	}
@@ -78,7 +70,12 @@ md5 = function(sixteen,ffff,length){
 										(7*j)
 									][m]%sixteen+i]
 								)
-						),r[4*m+j%4]
+						),[
+							7, 12, 17, 22,
+							5,  9, 14, 20,
+							4, 11, sixteen, 23,
+							6, 10, 15, 21
+						][4*m+j%4]
 					));
 				a = temp;
 			}
