@@ -3,12 +3,12 @@ md5 = function(sixteen,ffff,length){
 	var k = [],i=0;
 
 	var r = [
-	
+
 	7, 12, 17, 22,
 	5,  9, 14, 20,
 	4, 11, sixteen, 23,
 	6, 10, 15, 21
-	
+
 	];
 	for(;i<64;){
 		k[i] = ~~(Math.abs(Math.sin(++i)) * 4294967296);
@@ -16,7 +16,7 @@ md5 = function(sixteen,ffff,length){
 
 	function rhex(num,str,j){
 		str = "";
-		for(j=0; j <= 3;)	str += (256|(num >> (j++ * 8)) & 0x1FF).toString(sixteen).slice(1);
+		for(j=0; j <4;)	str += (256|(num >> (j++ * 8)) & 0x1FF).toString(sixteen).slice(1);
 		return str;
 	}
 
@@ -41,17 +41,17 @@ md5 = function(sixteen,ffff,length){
 		var a,b,c,d,temp,f,i=0,j,m,
 		x = str2blks_MD5(unescape(encodeURIComponent(str))),
 		h0 =  1732584193,
-		h1 = -271733879,
+		h3 = 271733878,
 		h2 = ~h0,
-		h3 =  ~h1;
+		h1 =  ~h3;
 
 		for(; i < x[length]; i += sixteen)
 		{
-			
-			a = h0
-			b = h1
-			c = h2
-			d = h3
+
+			a = h0;
+			b = h1;
+			c = h2;
+			d = h3;
 			for(j=0;j<64;j++){
 				f = [
 					((b&c)|((~b)&d)),
@@ -59,18 +59,28 @@ md5 = function(sixteen,ffff,length){
 					(b^c^d),
 					(c^(b|(~d)))
 				][m=j>>4];
-				temp = d
-				d = c
-				c = b
-				b = add(b , 
-						rol(add(add(a , f
-						 ) ,add( k[j] , x[[
-					j,
-					(5*j+1),
-					(3*j+5),
-					(7*j)
-				][m]%sixteen+i])) , r[4*m+j%4]))
-				a = temp
+				temp = d;
+				d = c;
+				c = b;
+				b = add(
+						b , 
+						rol(add(
+								add(
+									a ,
+									f
+								),
+								add(
+									k[j] ,
+									x[[
+										j,
+										(5*j+1),
+										(3*j+5),
+										(7*j)
+									][m]%sixteen+i]
+								)
+						),r[4*m+j%4]
+					));
+				a = temp;
 			}
 			h0 = add(h0 , a)
 			h1 = add(h1 , b)
