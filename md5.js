@@ -3,7 +3,7 @@ md5 = function(sixteen,ffff){
 	var k = [],i=0;
 
 	for(;i<64;){
-		k[i] = ~~(Math.abs(Math.sin(++i)) * 4294967296);
+		k[i] = 0|(Math.abs(Math.sin(++i)) * 4294967296);
 	}
 
 	function rhex(num){
