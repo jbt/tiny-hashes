@@ -19,9 +19,9 @@ md5 = function(sixteen,ffff){
 		return blks;
 	}
 
-	function add(x, y, lsw){
-		var msw = (x >> sixteen) + (y >> sixteen) + ((lsw=(x & ffff) + (y & ffff)) >> sixteen);
-		return (msw << sixteen) | (lsw & ffff);
+	function add(x, y){
+		var msw = (x >> sixteen) + (y >> sixteen) + ((y=(x & ffff) + (y & ffff)) >> sixteen);
+		return (msw << sixteen) | (y & ffff);
 	}
 	function rol(num, cnt){
 		return (num << cnt)|(num >>> (32 - cnt));
