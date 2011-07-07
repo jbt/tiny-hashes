@@ -1,4 +1,4 @@
-md5 = function(sixteen,ffff,length){
+md5 = function(sixteen,ffff){
 
 	var k = [],i=0;
 
@@ -13,7 +13,7 @@ md5 = function(sixteen,ffff,length){
 	}
 
 	function str2blks_MD5(str){
-		var	blks = [],i=0,j=str[length];
+		var	blks = [],i=0,j=str.length;
 		for(;i<=j;)	blks[i >> 2] |= (str.charCodeAt(i)||128) << ((i++ % 4) * 8);
 		blks[((j+ 8) >> 6)*sixteen+14] = j * 8;
 		return blks;
@@ -37,7 +37,7 @@ md5 = function(sixteen,ffff,length){
 		h2 = ~h0,
 		h1 =  ~h3;
 
-		for(; i < x[length]; i += sixteen)
+		for(; i < x.length; i += sixteen)
 		{
 
 			a = h0;
@@ -79,13 +79,13 @@ md5 = function(sixteen,ffff,length){
 					));
 				a = temp;
 			}
-			h0 = add(h0 , a)
-			h1 = add(h1 , b)
-			h2 = add(h2 , c)
-			h3 = add(h3 , d)
+			h0 = add(h0 , a);
+			h1 = add(h1 , b);
+			h2 = add(h2 , c);
+			h3 = add(h3 , d);
 
 		}
 		return rhex(h0) + rhex(h1) + rhex(h2) + rhex(h3);
-	}
+	};
 	return calcMD5;
-}(16,0xffff,'length');
+}(16,0xffff);
