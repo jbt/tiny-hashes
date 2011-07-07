@@ -43,7 +43,7 @@ md5 = function(sixteen,ffff){
 			b = h1;
 			c = h2;
 			d = h3;
-			for(j=0;j<64;){
+			for(j=0;j<64;a=temp){
 				f = [
 					((b&c)|((~b)&d)),
 					((d&b)|((~d)&c)),
@@ -76,7 +76,6 @@ md5 = function(sixteen,ffff){
 							6, 10, 15, 21
 						][4*m+j++%4]
 					));
-				a = temp;
 			}
 			h0 = add(h0 , a);
 			h1 = add(h1 , b);
