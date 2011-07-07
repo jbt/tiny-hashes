@@ -6,9 +6,9 @@ md5 = function(sixteen,ffff){
 		k[i] = ~~(Math.abs(Math.sin(++i)) * 4294967296);
 	}
 
-	function rhex(num,str,j){
-		str = "";
-		for(j=0; j <4;)	str += (256|(num >> (j++ * 8)) & 0x1FF).toString(sixteen).slice(1);
+	function rhex(num){
+		var str = "",j=0;
+		for(; j <4;)	str += (256|(num >> (j++ * 8)) & 0x1FF).toString(sixteen).slice(1);
 		return str;
 	}
 
@@ -19,9 +19,8 @@ md5 = function(sixteen,ffff){
 		return blks;
 	}
 
-	function add(x, y){
-		var lsw = (x & ffff) + (y & ffff);
-		var msw = (x >> sixteen) + (y >> sixteen) + (lsw >> sixteen);
+	function add(x, y, lsw){
+		var msw = (x >> sixteen) + (y >> sixteen) + ((lsw=(x & ffff) + (y & ffff)) >> sixteen);
 		return (msw << sixteen) | (lsw & ffff);
 	}
 	function rol(num, cnt){
