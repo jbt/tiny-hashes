@@ -11,7 +11,7 @@ sha1 = function(bigNum){
 		return str;
 	}
 
-	function sha1 (str) {
+	function sha1 (str1) {
 		
 
 		var blockstart=0;
@@ -27,13 +27,13 @@ sha1 = function(bigNum){
 		var word_array = [];
 		var temp2;
 
-		str = unescape(encodeURIComponent(str))
+		var str = unescape(encodeURIComponent(str1));
 		var str_len = str.length;
 
 		for (; i<=str_len;){
 			word_array[i>>2] |= (str.charCodeAt(i)||128)<<(8*(3-i++%4));
 		}
-		temp2 = (str_len>>>6)*16+14;
+		temp2 = (str_len>>6)*16+14;
 		word_array[temp2++] = str_len>>>29;
 		word_array[temp2++] = (str_len << 3) & bigNum
 		for (; blockstart < temp2; blockstart += 16) {
@@ -56,12 +56,12 @@ sha1 = function(bigNum){
 					F = G + (B ^ C ^ D) + H + 341275144,
 					G + ((B & C) | (B & D) | (C & D)) + H + 882459459,
 					F + 1535694389
-				][0|(i++/20)];
+				][0|(i++/20)] & bigNum;
 				E = D;
 				D = C;
 				C = rotate_left(B, 30);
 				B = A;
-				A = temp & bigNum;
+				A = temp;
 			}
 
 			H0 = (H0 + A) & bigNum;
