@@ -6,8 +6,8 @@ sha256 = function(sixteen, ffff,length){
   while(++i<18)if(!ints[i])for(j=i*i;j<312;j+=i)ints[j]=1;
   for(i=1;i<313;)if(!ints[++i])primes.push(i);
   function x(num,root){
-    var x = Math.pow(num,1/root);
-    return 0|((x-~~x)*4294967296)
+    var y = Math.pow(num,1/root);
+    return 0|((y-~~y)*4294967296);
   }
   for(;idx--;)K[idx]=x(primes[idx],3);
 
