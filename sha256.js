@@ -19,15 +19,15 @@ sha256 = function(ffff){
 
   function SHA256(str){
     var HASH = H.slice(i=0), s = unescape(encodeURIComponent(str)), W = [], l = s.length, m = [],
-        a, b, c, d, e, f, g, h, y;
+        a, b, c, d, e, f, g, h, y,z;
     for(;i<l;) m[i>>2] |= (s.charCodeAt(i) & 0xff) << 8*(3 - i++%4);
 
     l *= 8;
 
     m[l >> 5] |= 0x80 << (24 - l % 32);
-    m[((l + 64 >> 9) << 4) + 15] = l;
+    m[z=((l + 64 >> 9) << 4) + 15] = l;
 
-    for (i=0 ; i<m.length; i+=sixteen ) {
+    for (i=0 ; i<z; i+=sixteen ) {
       a = HASH[j=0];
       b = HASH[1];
       c = HASH[2];
