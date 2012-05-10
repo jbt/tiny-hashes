@@ -11,10 +11,9 @@ sha256 = function(sixteen, ffff,length){
   }
   for(;idx--;)K[idx]=x(primes[idx],3);
 
-  function add (x, y) {
-    var lsw = (x & ffff) + (y & ffff);
-    var msw = (x >> sixteen) + (y >> sixteen) + (lsw >> sixteen);
-    return (msw << sixteen) | (lsw & ffff);
+  function add(x, y){
+    var msw = (x >> sixteen) + (y >> sixteen) + ((y=(x & ffff) + (y & ffff)) >> sixteen);
+    return (msw << sixteen) | (y & ffff);
   }
 
   function S (X, n) { return ( X >>> n ) | (X << (32 - n)); }
