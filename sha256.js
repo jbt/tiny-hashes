@@ -69,7 +69,7 @@ sha256 = function(sixteen, ffff,length){
       }
 
       HASH = [
-        add(a, HASH[0]),
+        add(a, HASH[j=0]),
         add(b, HASH[1]),
         add(c, HASH[2]),
         add(d, HASH[3]),
@@ -80,7 +80,7 @@ sha256 = function(sixteen, ffff,length){
       ];
     }
 
-    for(s='',i=0;i<32;) s += ((256|HASH[i>>2]>>8*((3-i++%4)))&511).toString(sixteen).slice(1);
+    for(s='';j<32;) s += ((256|HASH[j>>2]>>8*((3-j++%4)))&511).toString(sixteen).slice(1);
 
     return s;
 
