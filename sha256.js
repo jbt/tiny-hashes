@@ -1,8 +1,8 @@
-sha256 = function(sixteen, ffff){
+sha256 = function(ffff){
 
 
   // Eratosthenes seive to find primes up to 311 for magic constants. This is why SHA256 is better than SHA1
-  var i=1,j,K=[],H=[];
+  var i=1,j,K=[],H=[],sixteen=16;
   while(++i<18)for(j=i*i;j<312;j+=i)H[j]=1;
   function x(num,root,y){
     y = Math.pow(num,1/root);
@@ -81,4 +81,4 @@ sha256 = function(sixteen, ffff){
 
   }
   return SHA256;
-}(16,0xffff);
+}(0xffff);
