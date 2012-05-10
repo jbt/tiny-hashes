@@ -1,4 +1,4 @@
-sha256 = function(sixteen, ffff,length,fifteen){
+sha256 = function(sixteen, ffff,length){
 
 
   // Eratosthenes seive to find primes up to 311 for magic constants. This is why SHA256 is better than SHA1
@@ -34,7 +34,7 @@ sha256 = function(sixteen, ffff,length,fifteen){
       for(idx=8;idx--;)HASH[idx]=x(primes[idx],2);
 
       m[l >> 5] |= 0x80 << (24 - l % 32);
-      m[((l + 64 >> 9) << 4) + fifteen] = l;
+      m[((l + 64 >> 9) << 4) + 15] = l;
 
       for ( i = 0; i<m[length]; i+=sixteen ) {
         a = HASH[0];
@@ -48,7 +48,7 @@ sha256 = function(sixteen, ffff,length,fifteen){
 
         for ( j = 0; j<64;) {
           if (j < sixteen) W[j] = m[j + i];
-          else W[j] = safe_add(safe_add(safe_add(Gamma1256(W[j - 2]), W[j - 7]), Gamma0256(W[j - fifteen])), W[j - sixteen]);
+          else W[j] = safe_add(safe_add(safe_add(Gamma1256(W[j - 2]), W[j - 7]), Gamma0256(W[j - 15])), W[j - sixteen]);
 
           T1 = safe_add(safe_add(safe_add(safe_add(h, Sigma1256(e)), Ch(e, f, g)), K[j]), W[j++]);
           T2 = safe_add(Sigma0256(a), Maj(a, b, c));
@@ -94,4 +94,4 @@ sha256 = function(sixteen, ffff,length,fifteen){
 
   }
   return SHA256;
-}(16,0xffff,'length',15);
+}(16,0xffff,'length');
