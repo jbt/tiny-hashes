@@ -25,14 +25,14 @@ sha256 = function(sixteen, ffff,length){
         a, b, c, d, e, f, g, h, j, y;
     for(;i<l;) m[i>>2] |= (s.charCodeAt(i) & 0xff) << 8*(3 - i++%4);
 
-    for(idx=8;idx--;)HASH[idx]=x(primes[idx],2);
+    for(i=9;i;)HASH[--i]=x(primes[i],2);
 
     l *= 8;
 
     m[l >> 5] |= 0x80 << (24 - l % 32);
     m[((l + 64 >> 9) << 4) + 15] = l;
 
-    for ( i = 0; i<m[length]; i+=sixteen ) {
+    for ( ; i<m[length]; i+=sixteen ) {
       a = HASH[j=0];
       b = HASH[1];
       c = HASH[2];
