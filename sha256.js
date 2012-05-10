@@ -22,7 +22,7 @@ sha256 = function(sixteen, ffff,length){
     s = unescape(encodeURIComponent(s));
 
     var HASH = [], W = [], l = s[length], m = [], i = 0,
-        a, b, c, d, e, f, g, h, j, T1, T2, y;
+        a, b, c, d, e, f, g, h, j, y;
     for(;i<l;) m[i>>2] |= (s.charCodeAt(i) & 0xff) << 8*(3 - i++%4);
 
     for(idx=8;idx--;)HASH[idx]=x(primes[idx],2);
@@ -48,24 +48,24 @@ sha256 = function(sixteen, ffff,length){
           add(S(y=W[j-2],17) ^ S(y,19) ^ (y>>>10),   W[j - 7]),
           add(S(y=W[j-15],7) ^ S(y,18) ^ (y>>>3),   W[j - sixteen])
         );
-
-        T1 = add(
-          add(
-            add(h,  S(e,6) ^ S(e,11) ^ S(e,25)),
-            add((e&f) ^ ((~e)&g),  K[j])
-          ),
-          W[j++]
-        );
-        T2 = add(S(a,2) ^ S(a,13) ^ S(a,22),  (a&b) ^ (b&c) ^ (c&a));
-
+        y = h;
         h = g;
         g = f;
         f = e;
-        e = add(d, T1);
+        e = add(
+          d,
+          y=add(
+            add(
+              add(y,  S(f,6) ^ S(f,11) ^ S(f,25)),
+              add((f&g) ^ ((~f)&h),  K[j])
+            ),
+            W[j++]
+          )
+        );
         d = c;
         c = b;
         b = a;
-        a = add(T1, T2);
+        a = add(y, add(S(a,2) ^ S(a,13) ^ S(a,22),  (a&c) ^ (c&d) ^ (d&a)));
       }
 
       HASH = [
