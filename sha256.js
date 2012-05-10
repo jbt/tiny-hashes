@@ -33,7 +33,7 @@ sha256 = function(sixteen, ffff,length){
     m[((l + 64 >> 9) << 4) + 15] = l;
 
     for ( i = 0; i<m[length]; i+=sixteen ) {
-      a = HASH[0];
+      a = HASH[j=0];
       b = HASH[1];
       c = HASH[2];
       d = HASH[3];
@@ -42,7 +42,7 @@ sha256 = function(sixteen, ffff,length){
       g = HASH[6];
       h = HASH[7];
 
-      for ( j = 0; j<64;) {
+      for (; j<64;) {
         if (j < sixteen) W[j] = m[j + i];
         else W[j] = add(
           add(S(y=W[j-2],17) ^ S(y,19) ^ (y>>>10),   W[j - 7]),
