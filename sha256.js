@@ -68,14 +68,16 @@ sha256 = function(sixteen, ffff,length){
         a = add(T1, T2);
       }
 
-      HASH[0] = add(a, HASH[0]);
-      HASH[1] = add(b, HASH[1]);
-      HASH[2] = add(c, HASH[2]);
-      HASH[3] = add(d, HASH[3]);
-      HASH[4] = add(e, HASH[4]);
-      HASH[5] = add(f, HASH[5]);
-      HASH[6] = add(g, HASH[6]);
-      HASH[7] = add(h, HASH[7]);
+      HASH = [
+        add(a, HASH[0]),
+        add(b, HASH[1]),
+        add(c, HASH[2]),
+        add(d, HASH[3]),
+        add(e, HASH[4]),
+        add(f, HASH[5]),
+        add(g, HASH[6]),
+        add(h, HASH[7])
+      ];
     }
 
     for(s='',i=0;i<32;) s += ((256|HASH[i>>2]>>8*((3-i++%4)))&511).toString(sixteen).slice(1);
