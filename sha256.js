@@ -18,10 +18,8 @@ sha256 = function(sixteen, ffff,length){
 
   function S (X, n) { return ( X >>> n ) | (X << (32 - n)); }
 
-  function SHA256(s){
-    s = unescape(encodeURIComponent(s));
-
-    var HASH = [], W = [], l = s[length], m = [], i = 0,
+  function SHA256(str){
+    var HASH = [], s = unescape(encodeURIComponent(str)), W = [], l = s[length], m = [], i = 0,
         a, b, c, d, e, f, g, h, j, y;
     for(;i<l;) m[i>>2] |= (s.charCodeAt(i) & 0xff) << 8*(3 - i++%4);
 
