@@ -11,26 +11,19 @@ sha256 = function(sixteen, ffff,length){
   }
   for(;idx--;)K[idx]=x(primes[idx],3);
 
-  function safe_add (x, y) {
+  function add (x, y) {
     var lsw = (x & ffff) + (y & ffff);
     var msw = (x >> sixteen) + (y >> sixteen) + (lsw >> sixteen);
     return (msw << sixteen) | (lsw & ffff);
   }
 
   function S (X, n) { return ( X >>> n ) | (X << (32 - n)); }
-  function R (X, n) { return ( X >>> n ); }
-  function Ch(x, y, z) { return ((x & y) ^ ((~x) & z)); }
-  function Maj(x, y, z) { return ((x & y) ^ (x & z) ^ (y & z)); }
-  function Sigma0256(x) { return (S(x, 2) ^ S(x, 13) ^ S(x, 22)); }
-  function Sigma1256(x) { return (S(x, 6) ^ S(x, 11) ^ S(x, 25)); }
-  function Gamma0256(x) { return (S(x, 7) ^ S(x, 18) ^ R(x, 3)); }
-  function Gamma1256(x) { return (S(x, 17) ^ S(x, 19) ^ R(x, 10)); }
 
   function SHA256(s){
 
     function core_sha256 (m, l) {
       var HASH = [], W = [],
-          a, b, c, d, e, f, g, h, i, j, T1, T2;
+          a, b, c, d, e, f, g, h, i, j, T1, T2, y;
       for(idx=8;idx--;)HASH[idx]=x(primes[idx],2);
 
       m[l >> 5] |= 0x80 << (24 - l % 32);
@@ -48,29 +41,38 @@ sha256 = function(sixteen, ffff,length){
 
         for ( j = 0; j<64;) {
           if (j < sixteen) W[j] = m[j + i];
-          else W[j] = safe_add(safe_add(safe_add(Gamma1256(W[j - 2]), W[j - 7]), Gamma0256(W[j - 15])), W[j - sixteen]);
+          else W[j] = add(
+            add(S(y=W[j-2],17) ^ S(y,19) ^ (y>>>10),   W[j - 7]),
+            add(S(y=W[j-15],7) ^ S(y,18) ^ (y>>>3),   W[j - sixteen])
+          );
 
-          T1 = safe_add(safe_add(safe_add(safe_add(h, Sigma1256(e)), Ch(e, f, g)), K[j]), W[j++]);
-          T2 = safe_add(Sigma0256(a), Maj(a, b, c));
+          T1 = add(
+            add(
+              add(h,  S(e,6) ^ S(e,11) ^ S(e,25)),
+              add((e&f) ^ ((~e)&g),  K[j])
+            ),
+            W[j++]
+          );
+          T2 = add(S(a,2) ^ S(a,13) ^ S(a,22),  (a&b) ^ (b&c) ^ (c&a));
 
           h = g;
           g = f;
           f = e;
-          e = safe_add(d, T1);
+          e = add(d, T1);
           d = c;
           c = b;
           b = a;
-          a = safe_add(T1, T2);
+          a = add(T1, T2);
         }
 
-        HASH[0] = safe_add(a, HASH[0]);
-        HASH[1] = safe_add(b, HASH[1]);
-        HASH[2] = safe_add(c, HASH[2]);
-        HASH[3] = safe_add(d, HASH[3]);
-        HASH[4] = safe_add(e, HASH[4]);
-        HASH[5] = safe_add(f, HASH[5]);
-        HASH[6] = safe_add(g, HASH[6]);
-        HASH[7] = safe_add(h, HASH[7]);
+        HASH[0] = add(a, HASH[0]);
+        HASH[1] = add(b, HASH[1]);
+        HASH[2] = add(c, HASH[2]);
+        HASH[3] = add(d, HASH[3]);
+        HASH[4] = add(e, HASH[4]);
+        HASH[5] = add(f, HASH[5]);
+        HASH[6] = add(g, HASH[6]);
+        HASH[7] = add(h, HASH[7]);
       }
       return HASH;
     }
