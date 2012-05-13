@@ -1,4 +1,4 @@
-= JavaScript Hash Functions
+#JavaScript Hash Functions
 
 Some JavaScript implementations of common hash functions (MD5, SHA-1 and SHA-256) designed to be
 compressed into the smallest size possible.
@@ -8,7 +8,7 @@ probably not the best idea to use them in anything absolutely mission-critical. 
 do seem to work fine for me wherever I use them. And if you do find something wrong, open an issue
 [on GitHub](https://github.com/jbt/js-crypto/issues) and I'll do my best to fix it.
 
-== Licence and Usage
+## Licence and Usage
 
 These scripts are licensed under [the ☺ licence](http://licence.visualidiot.com/), so basically
 you're free to use them however you please - feel free to use or modify them in whatever way you like.
