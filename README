@@ -1,5 +1,0 @@
-Some JS implementations of common hash functions, designed to be as small as possible.
-
-I can't absolutely guarantee that these work exactly as expected, but they seem to work for me so far.
-
-Over time I will actually properly update this and develop it into a more serious project.
