@@ -16,7 +16,7 @@ md5 = function(sixteen,ffff){
 
 
   var calcMD5 = function(str){
-    var b,c,d,f,j,
+    var b,c,d,j,
         x = [],
         str2 = unescape(encodeURIComponent(str)),
         a = str2.length,
