@@ -1,4 +1,4 @@
-#JavaScript Hash Functions
+# JavaScript Hash Functions
 
 Some JavaScript implementations of common hash functions (MD5, SHA-1 and SHA-256) designed to be
 compressed into the smallest size possible.
@@ -14,3 +14,8 @@ These scripts are licensed under [the ☺ licence](http://licence.visualidiot.co
 you're free to use them however you please - feel free to use or modify them in whatever way you like.
 You don't have to explicitly credit me (but if you do then I won't complain), but just don't pass
 them off as entirely your own, ok? That's just not cool.
+
+## But Why?
+
+To begin with, because I needed a smallish MD5 that wasn't poorly written (lots of the others out there
+leaked globals), but nowadays it's pretty much just because I can.
