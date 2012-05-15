@@ -17,7 +17,7 @@ sha1 = function(bigNum){
     for (; i<=str_len;){
       word_array[i>>2] |= (str.charCodeAt(i)||128)<<(8*(3-i++%4));
     }
-    word_array[temp2 = (str_len>>6)*16+15] = str_len>>>29;
+    word_array[temp2 = (str_len>>6)*16+15] = str_len>>29;
     word_array[temp2++] = (str_len << 3) & bigNum;
     for (; blockstart < temp2; blockstart += 16) {
       for (i = 0; i < 80; i++) {
@@ -42,7 +42,7 @@ sha1 = function(bigNum){
       for(i=5;i;) H[--i] = (H[i] + A[i]) & bigNum;
     }
 
-    for(str1='';i<40;)str1 += (((H[i>>3]) >>> (7-i++%8)*4) & 15).toString(16);
+    for(str1='';i<40;)str1 += (((H[i>>3]) >> (7-i++%8)*4) & 15).toString(16);
     return str1;
   }
   return sha1;
