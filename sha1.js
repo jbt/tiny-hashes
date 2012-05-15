@@ -3,14 +3,6 @@ sha1 = function(bigNum){
     return (n << s) | (n >>> (32 - s));
   }
 
-  function cvt_hex(val,str,i) {
-    str = "";
-    for (i = 8; i--;) {
-      str += ((val >>> (i * 4)) & 15).toString(16);
-    }
-    return str;
-  }
-
   function sha1 (str1) {
     var blockstart=0,
         i = 0,
@@ -66,7 +58,9 @@ sha1 = function(bigNum){
       H4 = (H4 + E) & bigNum;
     }
 
-    return cvt_hex(H0) + cvt_hex(H1) + cvt_hex(H2) + cvt_hex(H3) + cvt_hex(H4);
+    str1='';
+    for(i=0;i<40;)str1 += ((([H0,H1,H2,H3,H4][i>>3]) >>> (7-i++%8)*4) & 15).toString(16);
+    return str1;
   }
   return sha1;
 }(0x0ffffffff);
