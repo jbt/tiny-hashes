@@ -17,9 +17,9 @@ sha256 = function(ffff){
 
   function S (X, n) { return ( X >>> n ) | (X << (32 - n)); }
 
-  function SHA256(str){
-    var HASH = H.slice(i=0), s = unescape(encodeURIComponent(str)), W = [], l = s.length, m = [],
-        a, b, c, d, e, f, g, h, y,z;
+  function SHA256(b){
+    var HASH = H.slice(i=0), s = unescape(encodeURIComponent(b)), W = [], l = s.length, m = [],
+        a, y,z;
     for(;i<l;) m[i>>2] |= (s.charCodeAt(i) & 0xff) << 8*(3 - i++%4);
 
     l *= 8;
@@ -28,14 +28,7 @@ sha256 = function(ffff){
     m[z=((l + 64 >> 9) << 4) + 15] = l;
 
     for (i=0 ; i<z; i+=sixteen ) {
-      a = HASH[j=0];
-      b = HASH[1];
-      c = HASH[2];
-      d = HASH[3];
-      e = HASH[4];
-      f = HASH[5];
-      g = HASH[6];
-      h = HASH[7];
+      a = HASH.slice(j=0);
 
       for (; j<64;) {
         if (j < sixteen) W[j] = m[j + i];
@@ -43,39 +36,31 @@ sha256 = function(ffff){
           add(S(y=W[j-2],17) ^ S(y,19) ^ (y>>>10),   W[j - 7]),
           add(S(y=W[j-15],7) ^ S(y,18) ^ (y>>>3),   W[j - sixteen])
         );
-        y = h;
-        h = g;
-        g = f;
-        f = e;
-        e = add(
-          d,
-          y=add(
-            add(
-              add(y,  S(f,6) ^ S(f,11) ^ S(f,25)),
-              add((f&g) ^ ((~f)&h),  K[j])
+
+        a = [
+          add(
+            y=add(
+              add(
+                add(a[7],  S(b=a[4],6) ^ S(b,11) ^ S(b,25)),
+                add((b&a[5]) ^ ((~b)&a[6]),  K[j])
+              ),
+              W[j++]
             ),
-            W[j++]
-          )
-        );
-        d = c;
-        c = b;
-        b = a;
-        a = add(y, add(S(a,2) ^ S(a,13) ^ S(a,22),  (a&c) ^ (c&d) ^ (d&a)));
+            add(S(l=a[0],2) ^ S(l,13) ^ S(l,22),  (l&a[1]) ^ (a[1]&a[2]) ^ (a[2]&l))),
+          l,
+          a[1],
+          a[2],
+          add(a[3],y),
+          b,
+          a[5],
+          a[6]
+        ];
       }
 
-      HASH = [
-        add(a, HASH[j=0]),
-        add(b, HASH[1]),
-        add(c, HASH[2]),
-        add(d, HASH[3]),
-        add(e, HASH[4]),
-        add(f, HASH[5]),
-        add(g, HASH[6]),
-        add(h, HASH[7])
-      ];
+      for(j=8;j--;) HASH[j] = add(a[j],HASH[j]);
     }
 
-    for(s='';j<32;) s += ((256|HASH[j>>2]>>8*((3-j++%4)))&511).toString(sixteen).slice(1);
+    for(s='';j<31;) s += ((256|HASH[++j>>2]>>8*((3-j%4)))&511).toString(sixteen).slice(1);
 
     return s;
 
