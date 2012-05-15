@@ -16,7 +16,7 @@ md5 = function(sixteen,ffff){
 
 
   var calcMD5 = function(str){
-    var b,c,d,f,j,m,
+    var b,c,d,f,j,
         x = [],
         str2 = unescape(encodeURIComponent(str)),
         a = str2.length,
@@ -41,7 +41,7 @@ md5 = function(sixteen,ffff){
                   ((d&b)|((~d)&c)),
                   (b^c^d),
                   (c^(b|(~d)))
-                ][m=j>>4]
+                ][a=j>>4]
               ),
               add(
                 k[j],
@@ -50,14 +50,14 @@ md5 = function(sixteen,ffff){
                   (5*j+1),
                   (3*j+5),
                   (7*j)
-                ][m]%sixteen+i]
+                ][a]%sixteen+i]
               )
             ),[
               7, 12, 17, 22,
               5,  9, 14, 20,
               4, 11, sixteen, 23,
               6, 10, 15, 21
-            ][4*m+j++%4]
+            ][4*a+j++%4]
           )),
           b,
           c
