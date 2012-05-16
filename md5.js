@@ -67,7 +67,7 @@ md5 = function(sixteen,ffff){
     }
 
     str = '';
-    for(;j<sixteen;) str += (256|(h[j>>2] >> ((j++*8)%32)) & 0x1FF).toString(sixteen).slice(1);
+    for(;j<32;) str += ((h[j>>3] >> (((j++^1)&7)*4)) & 15).toString(sixteen);
 
     return str;
   };
