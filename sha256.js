@@ -39,7 +39,7 @@ sha256 = function(ffff){
     m[z=((l + 64 >> 9) << 4) + 15] = l;
 
     for (i=0 ; i<z; i+=sixteen ) {
-      a = HASH.slice(j=0);
+      a = HASH.slice(j=0,8);
 
       for (; j<64;) {
         if (j < sixteen) W[j] = m[j + i];
@@ -48,24 +48,19 @@ sha256 = function(ffff){
           add(S(y=W[j-15],7) ^ S(y,18) ^ (y>>>3),   W[j - sixteen])
         );
 
-        a = [
+        a.unshift(
           add(
             y=add(
               add(
-                add(a[7],  S(b=a[4],6) ^ S(b,11) ^ S(b,25)),
+                add(a.pop(),  S(b=a[4],6) ^ S(b,11) ^ S(b,25)),
                 add((b&a[5]) ^ ((~b)&a[6]),  K[j])
               ),
               W[j++]
             ),
-            add(S(l=a[0],2) ^ S(l,13) ^ S(l,22),  (l&a[1]) ^ (a[1]&a[2]) ^ (a[2]&l))),
-          l,
-          a[1],
-          a[2],
-          add(a[3],y),
-          b,
-          a[5],
-          a[6]
-        ];
+            add(S(l=a[0],2) ^ S(l,13) ^ S(l,22),  (l&a[1]) ^ (a[1]&a[2]) ^ (a[2]&l))
+          )
+        );
+        a[4] = add(a[4],y);
       }
 
       for(j=8;j--;) HASH[j] = add(a[j],HASH[j]);
