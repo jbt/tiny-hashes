@@ -10,10 +10,6 @@ md5 = function(sixteen,ffff){
     var msw = (x >> sixteen) + (y >> sixteen) + ((y=(x & ffff) + (y & ffff)) >> sixteen);
     return (msw << sixteen) | (y & ffff);
   }
-  function rol(num, cnt){
-    return (num << cnt)|(num >>> (32 - cnt));
-  }
-
 
   var calcMD5 = function(str){
     var b,c,d,j,
@@ -33,7 +29,7 @@ md5 = function(sixteen,ffff){
         a = [
           d = a[3],
           add( b = a[1] ,
-            rol(add(
+            (d = add(
               add(
                 a[0],
                 [
@@ -52,13 +48,14 @@ md5 = function(sixteen,ffff){
                   (7*j)
                 ][a]%sixteen+i]
               )
-            ),[
+            )
+          ) << (a =[
               7, 12, 17, 22,
               5,  9, 14, 20,
               4, 11, sixteen, 23,
               6, 10, 15, 21
-            ][4*a+j++%4]
-          )),
+            ][4*a+j++%4]) | (d >>> (32-a))
+          ),
           b,
           c
         ];
