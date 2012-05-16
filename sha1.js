@@ -18,7 +18,7 @@ sha1 = function(bigNum){
       word_array[i>>2] |= (str.charCodeAt(i)||128)<<(8*(3-i++%4));
     }
     word_array[temp2 = (str_len>>6)*16+14] = str_len>>29;
-    word_array[++temp2] = (str_len << 3) & bigNum;
+    word_array[++temp2] = (str_len << 3);
     for (; blockstart <= temp2; blockstart += 16) {
       A = H.slice(i=0);
 
