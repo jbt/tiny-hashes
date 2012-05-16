@@ -19,8 +19,8 @@ md5 = function(sixteen,ffff){
         h = [b=1732584193,c=-271733879,~b,~c],
         i=0;
 
-    for(;i<=a;) x[i >> 2] |= (str2.charCodeAt(i)||128) << ((i++ % 4) * 8);
-    x[str=((a+ 8) >> 6)*sixteen+14] = a * 8;
+    for(;i<=a;) x[i >> 2] |= (str2.charCodeAt(i)||128) << 8*(i++ % 4);
+    x[str=(a+8 >> 6)*sixteen+14] = a * 8;
     i = 0;
 
     for(; i < str; i += sixteen){
@@ -28,33 +28,33 @@ md5 = function(sixteen,ffff){
       for(;j<64;){
         a = [
           d = a[3],
-          add( b = a[1] ,
+          add(
+            b = a[1] ,
             (d = add(
               add(
                 a[0],
                 [
-                  ((b&(c=a[2]))|((~b)&d)),
-                  ((d&b)|((~d)&c)),
-                  (b^c^d),
-                  (c^(b|(~d)))
+                  b&(c=a[2]) | ~b&d,
+                  d&b | ~d&c,
+                  b^c^d,
+                  c^(b|~d)
                 ][a=j>>4]
               ),
               add(
                 k[j],
                 x[[
                   j,
-                  (5*j+1),
-                  (3*j+5),
-                  (7*j)
+                  5*j+1,
+                  3*j+5,
+                  7*j
                 ][a]%sixteen+i]
               )
-            )
-          ) << (a =[
+            )) << (a =[
               7, 12, 17, 22,
               5,  9, 14, 20,
               4, 11, sixteen, 23,
               6, 10, 15, 21
-            ][4*a+j++%4]) | (d >>> (32-a))
+            ][4*a+j++%4]) | d >>> 32-a
           ),
           b,
           c

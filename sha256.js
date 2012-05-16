@@ -2,13 +2,24 @@ sha256 = function(ffff){
 
 
   // Eratosthenes seive to find primes up to 311 for magic constants. This is why SHA256 is better than SHA1
-  var i=1,j,K=[],H=[],sixteen=16;
-  while(++i<18)for(j=i*i;j<312;j+=i)H[j]=1;
+  var i=1,
+      j,
+      K=[],
+      H=[],
+      sixteen=16;
+
+  while(++i<18)
+    for(j=i*i;j<312;j+=i)
+      H[j]=1;
+
   function x(num,root,y){
     y = Math.pow(num,1/root);
     return(y-~~y)*4294967296|0;
   }
-  for(i=1,j=0;i<313;)if(!H[++i])H[j]=x(i,2),K[j++]=x(i,3);
+
+  for(i=1,j=0;i<313;)
+    if(!H[++i])
+      H[j]=x(i,2), K[j++]=x(i,3);
 
   function add(x, y){
     var msw = (x >> sixteen) + (y >> sixteen) + ((y=(x & ffff) + (y & ffff)) >> sixteen);
@@ -60,7 +71,7 @@ sha256 = function(ffff){
       for(j=8;j--;) HASH[j] = add(a[j],HASH[j]);
     }
 
-    for(s='';j<63;) s += ((HASH[++j>>3]>>4*((7-j%8)))&15).toString(sixteen);
+    for(s='';j<63;) s += ((HASH[++j>>3]>>4*(7-j%8))&15).toString(sixteen);
 
     return s;
 
