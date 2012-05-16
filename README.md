@@ -19,3 +19,10 @@ them off as entirely your own, ok? That's just not cool.
 
 To begin with, because I needed a smallish MD5 that wasn't poorly written (lots of the others out there
 leaked globals), but nowadays it's pretty much just because I can.
+
+## And How?
+
+Well, I started out with a mashup of the pseudocode on the respective wikipedia pages for the functions
+along with helper functions I found somewhere on the internet for converting strings to byte arrays etc,
+then bashed them every which-way I could with functionally-equivalent rearrangements to make the size
+smaller however I could think. Just don't try to get me to explain what any of it does any more.
