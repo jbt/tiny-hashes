@@ -60,7 +60,7 @@ sha256 = function(ffff){
       for(j=8;j--;) HASH[j] = add(a[j],HASH[j]);
     }
 
-    for(s='';j<31;) s += ((256|HASH[++j>>2]>>8*((3-j%4)))&511).toString(sixteen).slice(1);
+    for(s='';j<63;) s += ((HASH[++j>>3]>>4*((7-j%8)))&15).toString(sixteen);
 
     return s;
 
