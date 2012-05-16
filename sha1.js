@@ -9,22 +9,21 @@ sha1 = function(bigNum){
         W = [],
         H = [0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476, 0xC3D2E1F0],
         A, B, C, D, F, G,
-        word_array = [],
         temp2,
         str = unescape(encodeURIComponent(str1)),
         str_len = str.length;
 
     for (; i<=str_len;){
-      word_array[i>>2] |= (str.charCodeAt(i)||128)<<(8*(3-i++%4));
+      W[i>>2] |= (str.charCodeAt(i)||128)<<(8*(3-i++%4));
     }
-    word_array[temp2 = (str_len>>6)*16+14] = str_len>>29;
-    word_array[++temp2] = (str_len << 3);
+    W[temp2 = (str_len>>6)*16+14] = str_len>>29;
+    W[++temp2] = (str_len << 3);
     for (; blockstart <= temp2; blockstart += 16) {
       A = H.slice(i=0);
 
       for (; i < 80; A = [G, A[0], rotate_left(B, 30), C, D]) {
         G = W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16];
-        G = rotate_left(A[0],5) + A[4] + (W[i] = (i<16) ? ~~word_array[blockstart + i] : (rotate_left(G, 1))) + 1518500249;
+        G = rotate_left(A[0],5) + A[4] + (W[i] = (i<16) ? ~~W[blockstart + i] : (rotate_left(G, 1))) + 1518500249;
         G = [
           G + (((B=A[1]) & (C=A[2])) | (~B & (D=A[3]))),
           F = G + (B ^ C ^ D) + 341275144,
