@@ -20,15 +20,11 @@ sha1 = function(bigNum){
     word_array[temp2 = (str_len>>6)*16+15] = str_len>>29;
     word_array[temp2++] = (str_len << 3) & bigNum;
     for (; blockstart < temp2; blockstart += 16) {
-      for (i = 0; i < 80; i++) {
-        G = W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16];
-        W[i] = (i<16) ? ~~word_array[blockstart + i] : (rotate_left(G, 1));
-      }
-
       A = H.slice(i=0);
 
       for (; i < 80; A = [G, A[0], rotate_left(B, 30), C, D]) {
-        G = rotate_left(A[0],5) + A[4] + W[i] + 1518500249;
+        G = W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16];
+        G = rotate_left(A[0],5) + A[4] + (W[i] = (i<16) ? ~~word_array[blockstart + i] : (rotate_left(G, 1))) + 1518500249;
         G = [
           G + (((B=A[1]) & (C=A[2])) | (~B & (D=A[3]))),
           F = G + (B ^ C ^ D) + 341275144,
