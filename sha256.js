@@ -12,9 +12,9 @@ sha256 = function(ffff){
     for(j=i*i;j<312;j+=i)
       H[j]=1;
 
-  function x(num,root,y){
-    y = Math.pow(num,1/root);
-    return(y-~~y)*4294967296|0;
+  function x(num,root){
+    num = Math.pow(num,1/root);
+    return(num-~~num)*4294967296|0;
   }
 
   for(i=1,j=0;i<313;)
