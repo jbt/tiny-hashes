@@ -14,7 +14,7 @@ sha1 =  function (str1) {
   W[temp2 = (str_len>>6)*16+14] = str_len>>29;
   W[++temp2] = (str_len << 3);
   for (; blockstart <= temp2; blockstart += 16) {
-    A = H.slice(i=0);
+    A = H,i=0;
 
     for (; i < 80; A = [G, s, B<<30|B>>>2, C, D]) {
       G = W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16];

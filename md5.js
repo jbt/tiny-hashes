@@ -24,7 +24,7 @@ md5 = function(sixteen,ffff){
     i = 0;
 
     for(; i < str; i += sixteen){
-      a = h.slice(j=0);
+      a = h,j=0;
       for(;j<64;){
         a = [
           d = a[3],
