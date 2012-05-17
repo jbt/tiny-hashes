@@ -29,7 +29,7 @@ sha256 = function(ffff){
   function S (X, n) { return ( X >>> n ) | (X << (32 - n)); }
 
   function SHA256(b){
-    var HASH = H.slice(i=0), s = unescape(encodeURIComponent(b)), W = [], l = s.length, m = [],
+    var HASH = H.slice(i=0), s = unescape(encodeURI(b)), W = [], l = s.length, m = [],
         a, y,z;
     for(;i<l;) m[i>>2] |= (s.charCodeAt(i) & 0xff) << 8*(3 - i++%4);
 
