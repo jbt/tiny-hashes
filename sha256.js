@@ -41,7 +41,7 @@ sha256 = function(ffff){
     for (i=0 ; i<z; i+=sixteen ) {
       a = HASH.slice(j=0,8);
 
-      for (; j<64;) {
+      for (; j<64;a[4] = add(a[4],y)) {
         if (j < sixteen) W[j] = m[j + i];
         else W[j] = add(
           add(S(y=W[j-2],17) ^ S(y,19) ^ (y>>>10),   W[j - 7]),
@@ -60,7 +60,6 @@ sha256 = function(ffff){
             add(S(l=a[0],2) ^ S(l,13) ^ S(l,22),  (l&a[1]) ^ (a[1]&a[2]) ^ (a[2]&l))
           )
         );
-        a[4] = add(a[4],y);
       }
 
       for(j=8;j--;) HASH[j] = add(a[j],HASH[j]);
