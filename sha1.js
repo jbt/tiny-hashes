@@ -11,8 +11,7 @@ sha1 =  function (str1) {
      i<=str_len;){
     W[i>>2] |= (s.charCodeAt(i)||128)<<(8*(3-i++%4));
   }
-  W[temp2 = (str_len>>6)*16+14] = str_len>>29;
-  W[++temp2] = (str_len << 3);
+  W[temp2 = (str_len>>6<<4)+15] = str_len<<3;
   for (; blockstart <= temp2; blockstart += 16) {
     A = H,i=0;
 
