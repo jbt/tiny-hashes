@@ -13,8 +13,7 @@ sha256 = function(ffff){
       H[j]=1;
 
   function x(num,root){
-    num = Math.pow(num,1/root);
-    return(num-~~num)*4294967296|0;
+    return(Math.pow(num,1/root)%1)*4294967296|0;
   }
 
   for(i=1,j=0;i<313;)
@@ -22,6 +21,7 @@ sha256 = function(ffff){
       H[j]=x(i,2), K[j++]=x(i,3);
 
   function add(x, y){
+    //return (((x>>1)+(y>>1))<<1)+(x&1)+(y&1) ;
     var msw = (x >> sixteen) + (y >> sixteen) + ((y=(x & ffff) + (y & ffff)) >> sixteen);
     return (msw << sixteen) | (y & ffff);
   }
