@@ -7,8 +7,9 @@ md5 = function(sixteen,ffff){
   }
 
   function add(x, y){
-    var msw = (x >> sixteen) + (y >> sixteen) + ((y=(x & ffff) + (y & ffff)) >> sixteen);
-    return (msw << sixteen) | (y & ffff);
+    return (((x>>1)+(y>>1))<<1)+(x&1)+(y&1) ;
+    //var msw = (x >> sixteen) + (y >> sixteen) + ((y=(x & ffff) + (y & ffff)) >> sixteen);
+    //return (msw << sixteen) | (y & ffff);
   }
 
   var calcMD5 = function(str){

@@ -21,9 +21,9 @@ sha256 = function(ffff){
       H[j]=x(i,2), K[j++]=x(i,3);
 
   function add(x, y){
-    //return (((x>>1)+(y>>1))<<1)+(x&1)+(y&1) ;
-    var msw = (x >> sixteen) + (y >> sixteen) + ((y=(x & ffff) + (y & ffff)) >> sixteen);
-    return (msw << sixteen) | (y & ffff);
+    return (((x>>1)+(y>>1))<<1)+(x&1)+(y&1) ;
+    //var msw = (x >> sixteen) + (y >> sixteen) + ((y=(x & ffff) + (y & ffff)) >> sixteen);
+    //return (msw << sixteen) | (y & ffff);
   }
 
   function S (X, n) { return ( X >>> n ) | (X << (32 - n)); }
