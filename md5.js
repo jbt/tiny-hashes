@@ -1,4 +1,4 @@
-md5 = function(sixteen,ffff){
+md5 = function(sixteen){
 
   var k = [],i=0;
 
@@ -70,4 +70,4 @@ md5 = function(sixteen,ffff){
     return str;
   };
   return calcMD5;
-}(16,0xffff);
+}(16);
