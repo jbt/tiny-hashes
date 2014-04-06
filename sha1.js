@@ -1,23 +1,25 @@
-sha1 =  function (str1) {
+sha1 = function (str1){
   for (var blockstart=0,
       i = 0,
       W = [],
       H = [0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476, 0xC3D2E1F0],
       A, B, C, D, F, G,
+      word_array = [],
       temp2,
       s = unescape(encodeURI(str1)),
       str_len = s.length;
 
-     i<=str_len;){
-    W[i>>2] |= (s.charCodeAt(i)||128)<<(8*(3-i++%4));
+    i<=str_len;){
+    word_array[i>>2] |= (s.charCodeAt(i)||128)<<(8*(3-i++%4));
   }
-  W[temp2 = (str_len>>6<<4)+15] = str_len<<3;
+  word_array[temp2 = ((str_len+8)>>6<<4)+15] = str_len<<3;
+
   for (; blockstart <= temp2; blockstart += 16) {
     A = H,i=0;
 
     for (; i < 80;
       A = [[
-        (G = ((s=A[0])<<5|s>>>27) + A[4] + (W[i] = (i<16) ? ~~W[blockstart + i] : G<<1|G>>>31) + 1518500249) + ((B=A[1]) & (C=A[2]) | ~B & (D=A[3])),
+        (G = ((s=A[0])<<5|s>>>27) + A[4] + (W[i] = (i<16) ? ~~word_array[blockstart + i] : G<<1|G>>>31) + 1518500249) + ((B=A[1]) & (C=A[2]) | ~B & (D=A[3])),
         F = G + (B ^ C ^ D) + 341275144,
         G + (B & C | B & D | C & D) + 882459459,
         F + 1535694389
