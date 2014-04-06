@@ -1,4 +1,4 @@
-sha1 = function(str1){
+sha1 = function (str1){
   for (var blockstart=0,
       i = 0,
       W = [],
@@ -9,7 +9,7 @@ sha1 = function(str1){
       s = unescape(encodeURI(str1)),
       str_len = s.length;
 
-     i<=str_len;){
+    i<=str_len;){
     word_array[i>>2] |= (s.charCodeAt(i)||128)<<(8*(3-i++%4));
   }
   word_array[temp2 = ((str_len+8)>>6<<4)+15] = str_len<<3;
