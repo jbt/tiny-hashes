@@ -1,24 +1,23 @@
-CLOSURE_WHITESPACE=closure --compilation_level WHITESPACE_ONLY
-CLOSURE_SIMPLE=closure --compilation_level SIMPLE_OPTIMIZATIONS
-CLOSURE_ADVANCED=closure --compilation_level ADVANCED_OPTIMIZATIONS
-
-CLOSURE=$(CLOSURE_ADVANCED)
+CLOSURE = java -jar compiler.jar --compilation_level ADVANCED_OPTIMIZATIONS
 
 TARGETS=md5-min.js sha1-min.js sha256-min.js
 
 all: $(TARGETS)
 
-md5-min.js: md5.js
-	$(CLOSURE) --js $< --js_output_file $@
+md5-min.js: md5.js compiler.jar Makefile
+	$(CLOSURE) < $< | tr -d '\n' > $@
 
-sha1-min.js: sha1.js
-	$(CLOSURE) --js $< --js_output_file $@
+sha1-min.js: sha1.js compiler.jar Makefile
+	$(CLOSURE) < $< | tr -d '\n' > $@
 
-sha256-min.js: sha256.js
-	$(CLOSURE) --js $< --js_output_file $@
+sha256-min.js: sha256.js compiler.jar Makefile
+	$(CLOSURE) < $< | tr -d '\n' > $@
+
+compiler.jar:
+	wget -O- http://dl.google.com/closure-compiler/compiler-latest.tar.gz | tar -xz compiler.jar
 
 test: $(TARGETS)
 	./test.js
 
 clean:
-	rm $(TARGETS) 2> /dev/null || true
+	@rm -f $(TARGETS)

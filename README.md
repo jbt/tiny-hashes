@@ -26,3 +26,5 @@ Well, I started out with a mashup of the pseudocode on the respective wikipedia 
 along with helper functions I found somewhere on the internet for converting strings to byte arrays etc,
 then bashed them every which-way I could with functionally-equivalent rearrangements to make the size
 smaller however I could think. Just don't try to get me to explain what any of it does any more.
+
+Shout out to [RyanC][//github.com/ryancdotorg] for spotting a couple of bugs where I'd been a moron and over-optimised.
