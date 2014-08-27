@@ -5,8 +5,7 @@ sha256 = (function(){
   var i=1,
       j,
       K=[],
-      H=[],
-      sixteen=16;
+      H=[];
 
   while(++i<18)
     for(j=i*i;j<312;j+=i)
@@ -42,14 +41,14 @@ sha256 = (function(){
     m[l >> 5] |= 0x80 << (24 - l % 32);
     m[z=((l + 64 >> 9) << 4) + 15] = l;
 
-    for (i=0 ; i<z; i+=sixteen ) {
+    for (i=0 ; i<z; i+=16 ) {
       a = HASH.slice(j=0,8);
 
       for (; j<64;a[4] = add(a[4],y)) {
-        if (j < sixteen) W[j] = m[j + i];
+        if (j < 16) W[j] = m[j + i];
         else W[j] = add(
           add(S(y=W[j-2],17) ^ S(y,19) ^ (y>>>10),   W[j - 7]),
-          add(S(y=W[j-15],7) ^ S(y,18) ^ (y>>>3),   W[j - sixteen])
+          add(S(y=W[j-15],7) ^ S(y,18) ^ (y>>>3),   W[j - 16])
         );
 
         a.unshift(
@@ -69,7 +68,7 @@ sha256 = (function(){
       for(j=8;j--;) HASH[j] = add(a[j],HASH[j]);
     }
 
-    for(s='';j<63;) s += ((HASH[++j>>3]>>4*(7-j%8))&15).toString(sixteen);
+    for(s='';j<63;) s += ((HASH[++j>>3]>>4*(7-j%8))&15).toString(16);
 
     return s;
 

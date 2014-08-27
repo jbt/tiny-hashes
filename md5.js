@@ -1,4 +1,4 @@
-md5 = function(sixteen){
+md5 = function(){
 
   var k = [],i=0;
 
@@ -21,10 +21,10 @@ md5 = function(sixteen){
         i=0;
 
     for(;i<=a;) x[i >> 2] |= (str2.charCodeAt(i)||128) << 8*(i++ % 4);
-    x[str=(a+8 >> 6)*sixteen+14] = a * 8;
+    x[str=(a+8 >> 6)*16+14] = a * 8;
     i = 0;
 
-    for(; i < str; i += sixteen){
+    for(; i < str; i += 16){
       a = h,j=0;
       for(;j<64;){
         a = [
@@ -48,12 +48,12 @@ md5 = function(sixteen){
                   5*j+1,
                   3*j+5,
                   7*j
-                ][a]%sixteen+i]
+                ][a]%16+i]
               )
             )) << (a =[
               7, 12, 17, 22,
               5,  9, 14, 20,
-              4, 11, sixteen, 23,
+              4, 11, 16, 23,
               6, 10, 15, 21
             ][4*a+j++%4]) | d >>> 32-a
           ),
@@ -65,9 +65,9 @@ md5 = function(sixteen){
     }
 
     str = '';
-    for(;j<32;) str += ((h[j>>3] >> ((1^j++&7)*4)) & 15).toString(sixteen);
+    for(;j<32;) str += ((h[j>>3] >> ((1^j++&7)*4)) & 15).toString(16);
 
     return str;
   };
   return calcMD5;
-}(16);
+}();
