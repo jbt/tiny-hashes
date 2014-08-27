@@ -12,7 +12,7 @@ md5 = function(sixteen){
     //return (msw << sixteen) | (y & ffff);
   }
 
-  var calcMD5 = function(str){
+  function calcMD5(str){
     var b,c,d,j,
         x = [],
         str2 = unescape(encodeURI(str)),
