@@ -6,12 +6,6 @@ md5 = function(){
     k[i] = 0|(Math.abs(Math.sin(++i)) * 4294967296);
   }
 
-  function add(x, y){
-    return (((x>>1)+(y>>1))<<1)+(x&1)+(y&1) ;
-    //var msw = (x >> sixteen) + (y >> sixteen) + ((y=(x & ffff) + (y & ffff)) >> sixteen);
-    //return (msw << sixteen) | (y & ffff);
-  }
-
   function calcMD5(str){
     var b,c,d,j,
         x = [],
@@ -29,39 +23,36 @@ md5 = function(){
       for(;j<64;){
         a = [
           d = a[3],
-          add(
-            b = a[1] ,
-            (d = add(
-              add(
-                a[0],
+          ((b = a[1]|0) +
+            ((d = (
+              (a[0] +
                 [
                   b&(c=a[2]) | ~b&d,
                   d&b | ~d&c,
                   b^c^d,
                   c^(b|~d)
                 ][a=j>>4]
-              ),
-              add(
-                k[j],
-                x[[
+              ) +
+              (k[j] +
+                (x[[
                   j,
                   5*j+1,
                   3*j+5,
                   7*j
-                ][a]%16+i]
+                ][a]%16+i]|0)
               )
             )) << (a =[
               7, 12, 17, 22,
               5,  9, 14, 20,
               4, 11, 16, 23,
               6, 10, 15, 21
-            ][4*a+j++%4]) | d >>> 32-a
+            ][4*a+j++%4]) | d >>> 32-a)
           ),
           b,
           c
         ];
       }
-      for(j=4;j;) h[--j] = add(h[j], a[j]);
+      for(j=4;j;) h[--j] = h[j] + a[j];
     }
 
     str = '';
