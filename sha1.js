@@ -15,7 +15,7 @@ sha1 = function (str1){
   word_array[temp2 = ((str_len+8)>>6<<4)+15] = str_len<<3;
 
   for (; blockstart <= temp2; blockstart += 16) {
-    A = H,i=0;
+    A = H; i = 0;
 
     for (; i < 80;
       A = [[
@@ -23,7 +23,7 @@ sha1 = function (str1){
         F = G + (B ^ C ^ D) + 341275144,
         G + (B & C | B & D | C & D) + 882459459,
         F + 1535694389
-      ][0|i++/20] | 0, s, B<<30|B>>>2, C, D]
+      ][0|((i++) / 20)] | 0, s, B<<30|B>>>2, C, D]
     ) {
       G = W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16];
     }
