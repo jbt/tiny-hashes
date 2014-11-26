@@ -3,7 +3,7 @@ sha1 = function (str1){
     var blockstart = 0,
       i = 0,
       W = [],
-      H = [0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476, 0xC3D2E1F0],
+      H = [A=0x67452301, B=0xEFCDAB89, ~A, ~B, 0xC3D2E1F0],
       A, B, C, D, F, G,
       word_array = [],
       temp2,
