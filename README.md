@@ -27,4 +27,4 @@ along with helper functions I found somewhere on the internet for converting str
 then bashed them every which-way I could with functionally-equivalent rearrangements to make the size
 smaller however I could think. Just don't try to get me to explain what any of it does any more.
 
-Shout out to [RyanC][//github.com/ryancdotorg] for spotting a couple of bugs where I'd been a moron and over-optimised.
+Shout out to [RyanC](//github.com/ryancdotorg) for spotting a couple of bugs where I'd been a moron and over-optimised.
