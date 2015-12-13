@@ -2,9 +2,9 @@
 
 // Because these functions are nasty and just set their functions without var,
 // we can require them like this and they'll magically appear in global scope.
-require('./sha256');
-require('./sha1');
-require('./md5');
+require('./sha256-min');
+require('./sha1-min');
+require('./md5-min');
 
 // test vectors from http://www.bichlmeier.info/sha256test.html
 // ... plus a load more
@@ -38,6 +38,10 @@ var VECTORS = [
 // Also add strings "xxxx.....xxxx" of length 0..2048
 for(var i = 0; i <= 2048; i += 1){
   VECTORS.push(Array(i+1).join('x'));
+}
+
+for(var i = 0; i < 22; i += 1){
+  VECTORS.push(Array(Math.pow(2, i) + 1).join('x'));
 }
 
 var crypto = require('crypto');
