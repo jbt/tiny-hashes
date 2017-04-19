@@ -77,3 +77,4 @@ sha256 = (function(){
 
   return SHA256;
 })();
+if (typeof module !== 'undefined' && module.exports) { module.exports = sha256; }

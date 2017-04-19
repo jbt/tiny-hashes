@@ -1,0 +1,18 @@
+{
+  "name": "js-crypto",
+  "version": "1.0.1",
+  "description": "Some JavaScript implementations of common hash functions (MD5, SHA-1 and SHA-256) designed to be compressed into the smallest size possible.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jbt/js-crypto.git"
+  },
+  "author": "James Taylor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jbt/js-crypto/issues"
+  },
+  "homepage": "https://github.com/jbt/js-crypto#readme"
+}
