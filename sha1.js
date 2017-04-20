@@ -36,3 +36,4 @@ sha1 = function (str1){
   for(str1 = ''; i < 40; )str1 += (H[i >> 3] >> (7 - i++ % 8) * 4 & 15).toString(16);
   return str1;
 };
+if (typeof module !== 'undefined' && module.exports) { module.exports = sha1; }

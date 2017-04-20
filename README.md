@@ -1,3 +1,4 @@
+[NOTE: this is forked from https://github.com/jbt/js-crypto/]
 # JavaScript Hash Functions
 
 Some JavaScript implementations of common hash functions (MD5, SHA-1 and SHA-256) designed to be
@@ -7,6 +8,31 @@ I can't entirely guarantee that they'll absolutely always work exactly as they s
 probably not the best idea to use them in anything absolutely mission-critical. That said, they
 do seem to work fine for me wherever I use them. And if you do find something wrong, open an issue
 [on GitHub](https://github.com/jbt/js-crypto/issues) and I'll do my best to fix it.
+
+## Requirements
+
+Assumes `node` and `npm` are installed.
+
+## Tests
+
+Either
+```
+$ make test
+```
+or equivalently
+```
+$ npm test
+```
+
+## Re-build minified versions
+Either
+```
+$ make
+```
+or equivalently
+```
+$ npm run build
+```
 
 ## Licence and Usage
 
