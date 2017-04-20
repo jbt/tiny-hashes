@@ -8,6 +8,31 @@ probably not the best idea to use them in anything absolutely mission-critical. 
 do seem to work fine for me wherever I use them. And if you do find something wrong, open an issue
 [on GitHub](https://github.com/jbt/js-crypto/issues) and I'll do my best to fix it.
 
+## Requirements
+
+Assumes `node` and `npm` are installed.
+
+## Tests
+
+Either
+```
+$ make test
+```
+or equivalently
+```
+$ npm test
+```
+
+## Re-build minified versions
+Either
+```
+$ make
+```
+or equivalently
+```
+$ npm run build
+```
+
 ## Licence and Usage
 
 These scripts are licensed under [the ☺ licence](http://licence.visualidiot.com/), so basically
