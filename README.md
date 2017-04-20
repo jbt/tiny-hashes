@@ -1,3 +1,4 @@
+[NOTE: this is forked from https://github.com/jbt/js-crypto/]
 # JavaScript Hash Functions
 
 Some JavaScript implementations of common hash functions (MD5, SHA-1 and SHA-256) designed to be
