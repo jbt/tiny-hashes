@@ -2,9 +2,9 @@
 
 // Because these functions are nasty and just set their functions without var,
 // we can require them like this and they'll magically appear in global scope.
-require('./sha256-min');
-require('./sha1-min');
-require('./md5-min');
+var sha256 = require('./sha256-min'),
+  sha1 = require('./sha1-min'),
+  md5 = require('./md5-min');
 
 // test vectors from http://www.bichlmeier.info/sha256test.html
 // ... plus a load more
@@ -36,25 +36,25 @@ var VECTORS = [
 ];
 
 // Also add strings "xxxx.....xxxx" of length 0..2048
-for(var i = 0; i <= 2048; i += 1){
-  VECTORS.push(Array(i+1).join('x'));
+for (var i = 0; i <= 2048; i += 1) {
+  VECTORS.push(Array(i + 1).join('x'));
 }
 
-for(var i = 0; i < 22; i += 1){
+for (var i = 0; i < 22; i += 1) {
   VECTORS.push(Array(Math.pow(2, i) + 1).join('x'));
 }
 
 var crypto = require('crypto');
 
 function run_tests(name, func) {
-  VECTORS.forEach(function(message){
+  VECTORS.forEach(function(message) {
 
     // use Node's built in crypto as our reference value
     var expected = crypto.createHash(name).update(message, 'utf8').digest('hex');
-    var result   = func(message);
-    if(result === expected){
+    var result = func(message);
+    if (result === expected) {
       console.log('%s \x1b[32mPASS\x1b[0m %s %s', name, result, message.length);
-    }else{
+    } else {
       console.log('%s \x1b[31mFAIL\x1b[0m', name);
       console.log('  Input:    %s', message);
       console.log('  Expected: %s', expected);

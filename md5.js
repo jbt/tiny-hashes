@@ -1,4 +1,4 @@
-md5 = function(){
+var md5 = function(){
 
   var k = [], i = 0;
 

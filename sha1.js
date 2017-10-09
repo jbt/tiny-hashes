@@ -1,4 +1,4 @@
-sha1 = function (str1){
+var sha1 = function (str1){
   for (
     var blockstart = 0,
       i = 0,

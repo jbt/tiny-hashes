@@ -1,4 +1,4 @@
-sha256 = (function(){
+var sha256 = (function(){
 
   // Eratosthenes seive to find primes up to 311 for magic constants. This is why SHA256 is better than SHA1
   var i = 1,
