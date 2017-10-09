@@ -1,4 +1,4 @@
-md5 = function(){
+var md5 = function(){
 
   var k = [], i = 0;
 
@@ -63,3 +63,4 @@ md5 = function(){
   }
   return calcMD5;
 }();
+if (typeof module !== 'undefined' && module.exports) { module.exports = md5; }
