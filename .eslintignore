@@ -3,4 +3,3 @@ sha1/index.*
 sha256/index.*
 dist
 node_modules
-package-lock.json

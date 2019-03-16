@@ -1,30 +1,49 @@
-# JavaScript Hash Functions
+# Tiny Hash Functions
 
-Some JavaScript implementations of common hash functions (MD5, SHA-1 and SHA-256) designed to be
-compressed into the smallest size possible.
+Some super-tiny implementations of common hash functions (MD5, SHA-1 and SHA-256).
 
-I can't entirely guarantee that they'll absolutely always work exactly as they should, so it's
-probably not the best idea to use them in anything absolutely mission-critical. That said, they
-do seem to work fine for me wherever I use them. And if you do find something wrong, open an issue
-[on GitHub](https://github.com/jbt/js-crypto/issues) and I'll do my best to fix it.
+## Installation
 
-## Licence and Usage
+From npm:
 
-These scripts are licensed under [the ☺ licence](http://licence.visualidiot.com/), so basically
-you're free to use them however you please - feel free to use or modify them in whatever way you like.
-You don't have to explicitly credit me (but if you do then I won't complain), but just don't pass
-them off as entirely your own, ok? That's just not cool.
+```
+npm i I_HAVENT_PUBLISHED_IT_YET
+```
 
-## But Why?
+## Usage
 
-To begin with, because I needed a smallish MD5 that wasn't poorly written (lots of the others out there
-leaked globals), but nowadays it's pretty much just because I can.
+Preferably using ES modules:
 
-## And How?
+```js
+import md5 from 'I_HAVENT_PUBLISHED_IT_YET/md5';
+import sha1 from 'I_HAVENT_PUBLISHED_IT_YET/sha1';
+import sha256 from 'I_HAVENT_PUBLISHED_IT_YET/sha256';
 
-Well, I started out with a mashup of the pseudocode on the respective wikipedia pages for the functions
-along with helper functions I found somewhere on the internet for converting strings to byte arrays etc,
-then bashed them every which-way I could with functionally-equivalent rearrangements to make the size
-smaller however I could think. Just don't try to get me to explain what any of it does any more.
+md5('hello, world'); // "e4d7f1b4ed2e42d15898f4b27b019da4", hopefully
 
-Shout out to [RyanC](//github.com/ryancdotorg) for spotting a couple of bugs where I'd been a moron and over-optimised.
+sha1('hello, world'); // "b7e23ec29af22b0b4e41da31e868d57226121c84", hopefully
+
+sha256('hello, world'); // "09ca7e4eaa6e8ae9c7d261167129184883644d07dfba7cbfbc4c8a2e08360d5b", hopefully
+```
+
+### Other ways of importing
+
+The following styles should also all work, but may be less-friendly to tree-shaking:
+
+```js
+const md5 = require('I_HAVENT_PUBLISHED_IT_YET/md5');
+const sha1 = require('I_HAVENT_PUBLISHED_IT_YET/sha1');
+const sha256 = require('I_HAVENT_PUBLISHED_IT_YET/sha256');
+
+import { md5, sha1, sha256 } from 'I_HAVENT_PUBLISHED_IT_YET';
+
+const { md5, sha1, sha256 } = require('I_HAVENT_PUBLISHED_IT_YET');
+```
+
+## When should you use this?
+
+Please don't use this if you absolutely rely on it being correct. There are more solid solutions out there.
+
+Please also don't use this server-side in Node.js - the `crypto` build-in module exists for a reason.
+
+Basically only use this if you want a super-duper-tiny hash function in the browser that you can be about 99% sure is correct and should always be self-consistent.
