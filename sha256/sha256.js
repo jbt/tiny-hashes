@@ -32,14 +32,11 @@ export default function sha256(b) {
     m = [],
     a, y, z;
 
-  for (; i < l;) {
-    m[i >> 2] |= (s.charCodeAt(i) & 0xff) << 8 * (3 - i++ % 4);
+  for (; i <= l;) {
+    m[i >> 2] |= (i < l ? s.charCodeAt(i) : 128) << 8 * (3 - i++ % 4);
   }
 
-  l *= 8;
-
-  m[l >> 5] |= 0x80 << (24 - l % 32);
-  m[z = (l + 64 >> 5) | 15] = l;
+  m[z = (l + 8 >> 2) | 15] = l << 3;
 
   for (i = 0; i < z; i += 16) {
     a = HASH.slice(j = 0, 8);

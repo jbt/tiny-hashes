@@ -12,7 +12,7 @@ export default function(str) {
 
     i <= len;
   ) {
-    words[i >> 2] |= (s.charCodeAt(i) || 128) << (8 * (3 - i++ % 4));
+    words[i >> 2] |= (i < len ? s.charCodeAt(i) : 128) << (8 * (3 - i++ % 4));
   }
 
   words[temp2 = ((len + 8) >> 2) | 15] = len << 3;

@@ -14,7 +14,7 @@ export default function md5(str) {
     i = 0;
 
   for (; i <= a;) {
-    x[i >> 2] |= (str2.charCodeAt(i) || 128) << 8 * (i++ % 4);
+    x[i >> 2] |= (i < a ? str2.charCodeAt(i) : 128) << 8 * (i++ % 4);
   }
 
   x[str = (a + 8 >> 6) * 16 + 14] = a * 8;

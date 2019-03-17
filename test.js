@@ -27,6 +27,7 @@ var VECTORS = [
   'Q£$%£!"@%$@%^£"!214',
   'Þetta er einhver kaldur íslenskum texta',
   'Online översättningstjänster är mycket användbara',
+  'Null characters\0 are bad'
 
   // Add any more strings in here if you'd like
 ];
