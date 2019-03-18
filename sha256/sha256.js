@@ -9,14 +9,14 @@ while (++i < 18) {
   }
 }
 
-function x(num, root) {
+function a(num, root) {
   return (Math.pow(num, 1 / root) % 1) * 4294967296|0;
 }
 
 for (i = 1, j = 0; i < 313;) {
   if (!K[++i]) {
-    H[j] = x(i, 2);
-    K[j++] = x(i, 3);
+    H[j] = a(i, 2);
+    K[j++] = a(i, 3);
   }
 }
 
@@ -25,54 +25,51 @@ function S(X, n) {
 }
 
 export default function sha256(b) {
-  var HASH = H.slice(i = 0),
-    s = unescape(encodeURI(b)), /* encode as utf8 */
+  var
     W = [],
-    l = s.length,
-    m = [],
-    a, y, z;
+    h = H.slice(i = 0, 8),
+    words = [],
+    s = unescape(encodeURI(b)) + '\x80',
+    l = s.length;
 
-  for (; i <= l;) {
-    m[i >> 2] |= (i < l ? s.charCodeAt(i) : 128) << 8 * (3 - i++ % 4);
+  for (; i < l;) {
+    words[i >> 2] |= s.charCodeAt(i) << 8 * (3 - i++ % 4);
   }
 
-  m[z = (l + 8 >> 2) | 15] = l << 3;
+  words[b = (--l + 8 >> 2) | 15] = l * 8;
 
-  for (i = 0; i < z; i += 16) {
-    a = HASH.slice(j = 0, 8);
+  for (i = 0; i < b; i += 16) {
+    a = h.slice(j = 0);
 
-    for (; j < 64; a[4] += y) {
-      if (j < 16) {
-        W[j] = m[j + i];
-      } else {
-        W[j] =
-            (S(y = W[j - 2], 17) ^ S(y, 19) ^ (y >>> 10)) +
-            (W[j - 7]|0) +
-            (S(y = W[j - 15], 7) ^ S(y, 18) ^ (y >>> 3)) +
-            (W[j - 16]|0);
-      }
+    for (; j < 64; a[4] += s) {
+      s = 0 |
+        (
+          W[j] =
+            (j < 16)
+              ? ~~words[j + i]
+              : (S(l = W[j - 2], 17) ^ S(l, 19) ^ (l >>> 10)) +
+                W[j - 7] +
+                (S(l = W[j - 15], 7) ^ S(l, 18) ^ (l >>> 3)) +
+                W[j - 16]
+
+        ) +
+        a.pop() +
+        (S(l = a[4], 6) ^ S(l, 11) ^ S(l, 25)) +
+        ((l & a[5]) ^ (~l & a[6])) +
+        K[j++];
 
       a.unshift(
-        (
-          y = (
-            a.pop() +
-              (S(b = a[4], 6) ^ S(b, 11) ^ S(b, 25)) +
-              (((b & a[5]) ^ ((~b) & a[6])) + K[j])|0
-          ) +
-            (W[j++]|0)
-        ) +
-          (S(l = a[0], 2) ^ S(l, 13) ^ S(l, 22)) +
-          ((l & a[1]) ^ (a[1] & a[2]) ^ (a[2] & l))
+        s +
+        (S(l = a[0], 2) ^ S(l, 13) ^ S(l, 22)) +
+        ((l & a[1]) ^ (a[1] & a[2]) ^ (a[2] & l))
       );
     }
 
-    for (j = 8; j--;) {
-      HASH[j] = a[j] + HASH[j];
-    }
+    for (j = 8; j;) h[--j] += a[j];
   }
 
-  for (s = ''; j < 63;) {
-    s += ((HASH[++j >> 3] >> 4 * (7 - j % 8)) & 15).toString(16);
+  for (s = ''; j < 64;) {
+    s += ((h[j >> 3] >> 4 * (7 - j++ % 8)) & 15).toString(16);
   }
 
   return s;

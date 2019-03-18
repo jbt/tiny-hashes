@@ -61,6 +61,7 @@
         "unix"
       ],
       "no-console": 0,
+      "no-func-assign": 0,
       "no-lonely-if": 2,
       "no-mixed-spaces-and-tabs": 2,
       "no-spaced-func": 2,
