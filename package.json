@@ -1,5 +1,5 @@
 {
-  "name": "js-crypto",
+  "name": "tiny-hashes",
   "version": "1.0.0",
   "description": "Super-tiny implementations of some basic hash functions",
   "main": "dist/index.js",
@@ -107,14 +107,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jbt/js-crypto.git"
+    "url": "git+https://github.com/jbt/tiny-hashes.git"
   },
   "author": "JT <jt@gosquared.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jbt/js-crypto/issues"
+    "url": "https://github.com/jbt/tiny-hashes/issues"
   },
-  "homepage": "https://github.com/jbt/js-crypto#readme",
+  "homepage": "https://github.com/jbt/tiny-hashes#readme",
   "devDependencies": {
     "eslint": "^5.15.2",
     "microbundle": "^0.11.0"

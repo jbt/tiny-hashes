@@ -7,7 +7,7 @@ Some super-tiny implementations of common hash functions (MD5, SHA-1 and SHA-256
 From npm:
 
 ```
-npm i I_HAVENT_PUBLISHED_IT_YET
+npm i tiny-hashes
 ```
 
 ## Usage
@@ -15,9 +15,9 @@ npm i I_HAVENT_PUBLISHED_IT_YET
 Preferably using ES modules:
 
 ```js
-import md5 from 'I_HAVENT_PUBLISHED_IT_YET/md5';
-import sha1 from 'I_HAVENT_PUBLISHED_IT_YET/sha1';
-import sha256 from 'I_HAVENT_PUBLISHED_IT_YET/sha256';
+import md5 from 'tiny-hashes/md5';
+import sha1 from 'tiny-hashes/sha1';
+import sha256 from 'tiny-hashes/sha256';
 
 md5('hello, world'); // "e4d7f1b4ed2e42d15898f4b27b019da4", hopefully
 
@@ -31,13 +31,13 @@ sha256('hello, world'); // "09ca7e4eaa6e8ae9c7d261167129184883644d07dfba7cbfbc4c
 The following styles should also all work, but may be less-friendly to tree-shaking:
 
 ```js
-const md5 = require('I_HAVENT_PUBLISHED_IT_YET/md5');
-const sha1 = require('I_HAVENT_PUBLISHED_IT_YET/sha1');
-const sha256 = require('I_HAVENT_PUBLISHED_IT_YET/sha256');
+const md5 = require('tiny-hashes/md5');
+const sha1 = require('tiny-hashes/sha1');
+const sha256 = require('tiny-hashes/sha256');
 
-import { md5, sha1, sha256 } from 'I_HAVENT_PUBLISHED_IT_YET';
+import { md5, sha1, sha256 } from 'tiny-hashes';
 
-const { md5, sha1, sha256 } = require('I_HAVENT_PUBLISHED_IT_YET');
+const { md5, sha1, sha256 } = require('tiny-hashes');
 ```
 
 ## When should you use this?
