@@ -1,19 +1,24 @@
-var i = 1,
+// See "precomputation" in notes
+var i = 18,
   j,
   K = [],
   H = [];
 
-while (++i < 18) {
-  for (j = i * i; j < 312; j += i) {
-    K[j] = 1;
+// Construct list of primes < 320
+// K[x] === 1 if x is composite, unset if prime
+for (;i > 1; i--) {
+  for (j = i; j < 320;) {
+    K[j += i] = 1;
   }
 }
 
+// See "`a` reassignment" in notes
 function a(num, root) {
-  return (Math.pow(num, 1 / root) % 1) * 4294967296|0;
+  return (Math.pow(num, 1 / root) /* % 1 */) * 4294967296|0;
 }
 
-for (i = 1, j = 0; i < 313;) {
+// i === 1
+for (j = 0; j < 64;) {
   if (!K[++i]) {
     H[j] = a(i, 2);
     K[j++] = a(i, 3);
@@ -21,55 +26,65 @@ for (i = 1, j = 0; i < 313;) {
 }
 
 function S(X, n) {
-  return (X >>> n) | (X << (32 - n));
+  return (X >>> n) | (X << (-n));
 }
 
 export default function sha256(b) {
   var
-    W = [],
-    h = H.slice(i = 0, 8),
+    h = H.slice(i = j = 0, 8),
     words = [],
     s = unescape(encodeURI(b)) + '\x80',
-    l = s.length;
+    W = s.length;
 
-  for (; i < l;) {
-    words[i >> 2] |= s.charCodeAt(i) << 8 * (3 - i++ % 4);
+  // See "Length bits" in notes
+  words[b = (--W / 4 + 2) | 15] = W * 8;
+
+  for (; ~W;) { // W !== -1
+    words[W >> 2] |= s.charCodeAt(W) << 8 * ~W--;
+    // words[W >> 2] |= s.charCodeAt(W) << 24 - 8 * W--;
   }
 
-  words[b = (--l + 8 >> 2) | 15] = l * 8;
 
-  for (i = 0; i < b; i += 16) {
-    a = h.slice(j = 0);
+  for (W = []; i < b; i += 16) {
+    // See "`a` reassignment" in notes
+    a = h.slice();
 
-    for (; j < 64; a[4] += s) {
-      s = 0 |
-        (
-          W[j] =
-            (j < 16)
-              ? ~~words[j + i]
-              : (S(l = W[j - 2], 17) ^ S(l, 19) ^ (l >>> 10)) +
-                W[j - 7] +
-                (S(l = W[j - 15], 7) ^ S(l, 18) ^ (l >>> 3)) +
-                W[j - 16]
-
-        ) +
-        a.pop() +
-        (S(l = a[4], 6) ^ S(l, 11) ^ S(l, 25)) +
-        ((l & a[5]) ^ (~l & a[6])) +
-        K[j++];
-
+    for (; j < 64;
       a.unshift(
         s +
-        (S(l = a[0], 2) ^ S(l, 13) ^ S(l, 22)) +
-        ((l & a[1]) ^ (a[1] & a[2]) ^ (a[2] & l))
+        (S(s = a[0], 2) ^ S(s, 13) ^ S(s, 22)) +
+        ((s & a[1]) ^ (a[1] & a[2]) ^ (a[2] & s))
+      )
+    ) {
+      a[3] += (
+        s = 0 |
+            (
+              W[j] =
+                (j < 16)
+                  ? ~~words[j + i]
+                  : (S(s = W[j - 2], 17) ^ S(s, 19) ^ (s >>> 10)) +
+                    W[j - 7] +
+                    (S(s = W[j - 15], 7) ^ S(s, 18) ^ (s >>> 3)) +
+                    W[j - 16]
+
+            ) +
+            a.pop() +
+            (S(s = a[4], 6) ^ S(s, 11) ^ S(s, 25)) +
+            ((s & a[5]) ^ (~s & a[6])) +
+            K[j++]
       );
     }
 
+    // See "Integer safety" in notes
     for (j = 8; j;) h[--j] += a[j];
+
+    // j === 0
   }
 
   for (s = ''; j < 64;) {
-    s += ((h[j >> 3] >> 4 * (7 - j++ % 8)) & 15).toString(16);
+    // s += ((h[j >> 3] >> 4 * ~j++) & 15).toString(16);
+    s += ((h[j >> 3] >> 4 * (7 - j++)) & 15).toString(16);
+    // s += ((h[j >> 3] >> -4 * ++j) & 15).toString(16);
   }
 
   return s;

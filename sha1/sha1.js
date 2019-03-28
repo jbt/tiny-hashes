@@ -1,50 +1,65 @@
-export default function(str) {
-  var i = 0,
+export default function sha1(b) {
+  var i,
     W = [],
-    A, B, C, D, F, G,
+    A, B, C, D,
     h = [ A = 0x67452301, B = 0xEFCDAB89, ~A, ~B, 0xC3D2E1F0 ],
     words = [],
-    s = unescape(encodeURI(str)) + '\x80',
+    s = unescape(encodeURI(b)) + '\x80',
     j = s.length;
 
-  for (; i < j;) {
-    words[i >> 2] |= s.charCodeAt(i) << (8 * (3 - i++ % 4));
+  // See "Length bits" in notes
+  words[b = (--j / 4 + 2) | 15] = j * 8;
+
+  for (; ~j;) { // j !== -1
+    words[j >> 2] |= s.charCodeAt(j) << 8 * ~j--;
+    // words[j >> 2] |= s.charCodeAt(j) << 24 - 8 * j--;
   }
 
-  words[str = (--j + 8 >> 2) | 15] = j * 8;
-
-  for (j = 0; j < str; j += 16) {
+  for (i = j = 0; i < b; i += 16) {
     A = h;
-    i = 0;
 
-    for (; i < 80;
+    for (; j < 80;
       A = [
-        G + [
-          (B & C | ~B & D),
-          F = (B ^ C ^ D) + 341275144,
-          (B & C | B & D | C & D) + 882459459,
-          F + 1535694389
-        ][0 | (i++ / 20)],
+        (
+          A[4] +
+          (
+            W[j] =
+              (j < 16)
+                ? ~~words[i + j]
+                : s * 2 | s < 0 // s << 1 | s >>> 31
+          ) +
+          1518500249 +
+          [
+            (B & C | ~B & D),
+            s = (B ^ C ^ D) + 341275144,
+            (B & C | B & D | C & D) + 882459459,
+            s + 1535694389
+          ][/* 0 | (j++ / 20)*/j++ / 5 >> 2] +
+          ((s = A[0]) << 5 | s >>> 27)
+        ),
         s,
         B << 30 | B >>> 2,
         C,
         D
       ]
     ) {
-      G = W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16];
-      s = A[0];
-      G = (s << 5 | s >>> 27) + A[4] + (W[i] = (i < 16) ? ~~words[j + i] : G << 1 | G >>> 31) + 1518500249;
+      s = W[j - 3] ^ W[j - 8] ^ W[j - 14] ^ W[j - 16];
       B = A[1];
       C = A[2];
       D = A[3];
     }
 
-    for (i = 5; i;) h[--i] += A[i];
+    // See "Integer safety" in notes
+    for (j = 5; j;) h[--j] += A[j];
+
+    // j === 0
   }
 
-  for (str = ''; i < 40;) {
-    str += (h[i >> 3] >> (7 - i++ % 8) * 4 & 15).toString(16);
+  for (s = ''; j < 40;) {
+    // s += ((h[j >> 3] >> 4 * ~j++) & 15).toString(16);
+    s += (h[j >> 3] >> (7 - j++) * 4 & 15).toString(16);
+    // s += ((h[j >> 3] >> -4 * ++j) & 15).toString(16);
   }
 
-  return str;
+  return s;
 }
